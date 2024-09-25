@@ -1,7 +1,6 @@
-package com.example.diu;
+package com.example.diu.EjContadores;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,7 +18,7 @@ public class Contador extends Application {
     private Label contadior;
     private int num=1;
 
-    private void botonPulsado(ActionEvent e) {
+   /* private void botonPulsado(ActionEvent e) {
         if (e.getSource() == btmas)
             contadior.setText(String.valueOf(++num));
         else if (e.getSource() == btmenos)
@@ -27,7 +26,12 @@ public class Contador extends Application {
         else if (e.getSource() == btcero)
             contadior.setText(String.valueOf(num = 0));
     }
+*/
 
+    private void botonPulsado(Button button){
+        num = (button == btmas) ? ++num : (button == btmenos) ? --num : 0;
+        contadior.setText(String.valueOf(num));
+    }
 
 
     @Override
@@ -53,12 +57,12 @@ public class Contador extends Application {
            btcero = new Button();
 
             btmas.setText("+");
-            btmas.setOnAction(e->botonPulsado(e));
+            btmas.setOnAction(e->botonPulsado(btmas));
             btmenos.setText("-");
-            btmenos.setOnAction(e->botonPulsado(e));
+            btmenos.setOnAction(e->botonPulsado(btmenos));
             btcero.setText("0");
             btcero.getStyleClass().add("btcero");
-            btcero.setOnAction(e->botonPulsado(e));
+            btcero.setOnAction(e->botonPulsado(btcero));
 
             botones.getChildren().addAll(btmenos, btcero, btmas);
             raiz.getChildren().addAll(botones, contadior);
