@@ -1,4 +1,4 @@
-package com.example.contadorsb;
+package com.example.contadorsb.Controller;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;

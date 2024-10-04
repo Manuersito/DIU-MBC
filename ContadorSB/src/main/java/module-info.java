@@ -13,4 +13,6 @@ module com.example.contadorsb {
 
     opens com.example.contadorsb to javafx.fxml;
     exports com.example.contadorsb;
+    exports com.example.contadorsb.Controller;
+    opens com.example.contadorsb.Controller to javafx.fxml;
 }
