@@ -1,0 +1,12 @@
+#btcero{
+-fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+#pane{
+-fx-background-color: red;
+}
+
+#cont{
+-fx-text-fill: blue;
+}

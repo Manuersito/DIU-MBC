@@ -9,4 +9,5 @@ module com.example.diu {
     exports com.example.diu;
     exports com.example.diu.EjContadores;
     opens com.example.diu.EjContadores to javafx.fxml;
+
 }
