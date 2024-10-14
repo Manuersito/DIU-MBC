@@ -9,11 +9,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Button?>
 
-<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.agendadiumbc.Controlador.PersonOverviewController">
+<AnchorPane prefHeight="300.0" prefWidth="600.0" stylesheets="@../../../CSS/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.agendadiumbc.Controlador.PersonOverviewController">
     <children>
         <SplitPane dividerPositions="0.25418060200668896" layoutX="163.0" layoutY="56.0" prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" stylesheets="@../../../CSS/Style.css">
                     <children>
                         <TableView fx:id="personTable" layoutX="-13.0" layoutY="39.0" prefHeight="298.0" prefWidth="418.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <columns>
@@ -26,7 +26,7 @@
                         </TableView>
                     </children>
                 </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: black;">
                     <children>
                         <Label layoutX="6.0" layoutY="5.0" text="Detalles Personales" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
                         <GridPane layoutX="55.0" layoutY="45.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="30.0">
@@ -59,11 +59,6 @@
                         </GridPane>
                         <HBox layoutX="237.0" layoutY="267.0" prefHeight="26.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="237.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="267.0">
                             <children>
-                                <Button mnemonicParsing="false" text="Nuevo">
-                                    <HBox.margin>
-                                        <Insets right="12.5" />
-                                    </HBox.margin>
-                                </Button>
                                 <Button mnemonicParsing="false" text="Editar">
                                     <HBox.margin>
                                         <Insets right="12.5" />
@@ -76,6 +71,7 @@
                                 </Button>
                             </children>
                         </HBox>
+                          <Button layoutX="110.0" layoutY="267.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="111.0" text="Nuevo" />
                     </children>
                 </AnchorPane>
             </items>
