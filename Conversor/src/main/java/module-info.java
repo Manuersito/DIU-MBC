@@ -11,6 +11,8 @@ module com.example.conversor {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires AccesoBBDDMoneda;
+    requires java.sql;
+    requires java.desktop;
 
     opens com.example.conversor to javafx.fxml;
     exports com.example.conversor;

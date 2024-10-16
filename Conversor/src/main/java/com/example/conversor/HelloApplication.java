@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
 
 public class HelloApplication extends Application {
     @Override
@@ -22,13 +23,15 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
+
         try {
-            ConexionJDBC conexion = new ConexionJDBC();
-            conexion.conectarBD();
+
+
             MonedaRepositoryImpl monedaRepositoryImpl = new MonedaRepositoryImpl();
-            MonedaVO monedaPrueba = new MonedaVO("prueba",1.2F);
-            monedaRepositoryImpl.addMoneda(monedaPrueba);
-            
+//            MonedaVO monedaPrueba = new MonedaVO();
+//            monedaRepositoryImpl.addMoneda(monedaPrueba);
+            monedaRepositoryImpl.ObtenerListaMonedas();
+
 
         }catch (Exception e){
             e.printStackTrace();
