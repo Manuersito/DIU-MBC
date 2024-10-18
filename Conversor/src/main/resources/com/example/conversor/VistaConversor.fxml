@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.conversor.controller.ControladorConversor">
+   <children>
+      <Label layoutX="77.0" layoutY="103.0" text="Euros">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="458.0" layoutY="103.0" text="Dolares">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="193.0" layoutY="23.0" text="Conversor de Monedas">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <TextField fx:id="euros" layoutX="24.0" layoutY="141.0" onAction="#cambiar" />
+      <TextField fx:id="dolares" layoutX="416.0" layoutY="141.0" />
+   </children>
+</Pane>
