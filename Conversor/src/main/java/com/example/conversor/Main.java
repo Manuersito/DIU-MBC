@@ -1,16 +1,15 @@
 package com.example.conversor;
 
-import Modelo.repository.impl.ConexionJDBC;
+
 import Modelo.repository.impl.MonedaRepositoryImpl;
 import com.example.conversor.controller.ControladorConversor;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import com.example.conversor.Modelo.ConversorModelo;
 import java.io.IOException;
-import java.sql.Connection;
+
 
 public class Main extends Application {
     @Override
