@@ -1,6 +1,6 @@
 package com.example.agenda.controller;
 
-import com.example.agenda.DateUtil;
+import com.example.agenda.util.DateUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -83,16 +83,16 @@ public class PersonOverviewController {
             firstNameLabel.setText(person.getFirstName());
             lastNameLabel.setText(person.getLastName());
             streetLabel.setText(person.getStreet());
-            postalCodeLabel.setText(Integer.toString(person.getPostalCode()));
             cityLabel.setText(person.getCity());
+            postalCodeLabel.setText(Integer.toString(person.getPostalCode()));
             birthdayLabel.setText(DateUtil.format(person.getBirthday()));
         } else {
             // Person is null, remove all the text.
             firstNameLabel.setText("");
             lastNameLabel.setText("");
             streetLabel.setText("");
-            postalCodeLabel.setText("");
             cityLabel.setText("");
+            postalCodeLabel.setText("");
             birthdayLabel.setText("");
         }
     }

@@ -1,8 +1,13 @@
 package com.example.agenda;
 
+import com.example.agenda.Modelo.AgendaModelo;
+import com.example.agenda.Modelo.ExcepcionPerson;
+import com.example.agenda.Modelo.PersonVO;
+import com.example.agenda.Modelo.repository.impl.PersonRepositoryImpl;
 import com.example.agenda.controller.BirthdayStatisticsController;
 import com.example.agenda.controller.PersonEditDialogController;
 import com.example.agenda.controller.PersonOverviewController;
+import com.example.agenda.util.PersonUtil;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,25 +20,33 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainApp extends Application {
+
+
+
 
     private Stage primaryStage;
     private BorderPane rootLayout;
     private ObservableList<Person> personData = FXCollections.observableArrayList();
 
-    public MainApp(){
+    public MainApp() {
         // Add some sample data
-        personData.add(new Person("Nikita", "Mezepin"));
-        personData.add(new Person("Jairo", "Calero"));
-        personData.add(new Person("Cheto", "Gonzalez"));
-        personData.add(new Person("Lidia", "Rodriguez"));
-        personData.add(new Person("Julen", "Pozo"));
-        personData.add(new Person("Rengar", "Martinez"));
-        personData.add(new Person("Kakaroto", "Ouija"));
-        personData.add(new Person("Stefan", "Oconer"));
-        personData.add(new Person("Franklin", "Tenaglia"));
-        personData.add(new Person("Nana","Zenoh"));
+
+        PersonRepositoryImpl personRepository = new PersonRepositoryImpl();
+        AgendaModelo agendaModelo = new AgendaModelo();
+        agendaModelo.setPersonRepository(personRepository);
+
+
+        try {
+           // System.out.println(agendaModelo.getPersons());
+            personData.addAll(agendaModelo.mostrar());
+        } catch (ExcepcionPerson e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
     /**
