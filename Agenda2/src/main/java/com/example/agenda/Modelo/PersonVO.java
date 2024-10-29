@@ -1,5 +1,7 @@
 package com.example.agenda.Modelo;
 
+import com.example.agenda.Person;
+
 import java.time.LocalDate;
 
 public class PersonVO {
@@ -31,6 +33,7 @@ public class PersonVO {
         this.postalCode = postalCode;
         this.birthday = birthday;
     }
+
 
     public String getFirstName() {
         return firstName;

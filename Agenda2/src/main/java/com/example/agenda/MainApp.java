@@ -24,43 +24,30 @@ import java.util.ArrayList;
 
 public class MainApp extends Application {
 
-
-
-
     private Stage primaryStage;
     private BorderPane rootLayout;
     private ObservableList<Person> personData = FXCollections.observableArrayList();
 
-    public MainApp() {
-        // Add some sample data
+    // Hacer agendaModelo un campo de instancia
+    private AgendaModelo agendaModelo;
 
+    public MainApp() {
+        // Initialize the agendaModelo and set the person repository
         PersonRepositoryImpl personRepository = new PersonRepositoryImpl();
-        AgendaModelo agendaModelo = new AgendaModelo();
+        agendaModelo = new AgendaModelo();
         agendaModelo.setPersonRepository(personRepository);
 
-
         try {
-           // System.out.println(agendaModelo.getPersons());
             personData.addAll(agendaModelo.mostrar());
         } catch (ExcepcionPerson e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
-    /**
-     * Returns the data as an observable list of Persons.
-     * @return
-     */
     public ObservableList<Person> getPersonData() {
         return personData;
     }
 
-    /**
-     * Returns the main stage.
-     * @return
-     */
     public Stage getPrimaryStage() {
         return primaryStage;
     }
@@ -70,26 +57,21 @@ public class MainApp extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("AGENDA");
 
-        //Set the application icon
+        // Set the application icon
         this.primaryStage.getIcons().add(new Image("file:resources/imagenes/agenda.png"));
 
         initRootLayout();
-
         showPersonOverview();
-
     }
 
-    /**
-     * Initializes the root layout.
-     */
     public void initRootLayout() {
         try {
-            // Load root layout from fxml file.
+            // Load root layout from fxml file
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("RootLayout.fxml"));
             rootLayout = (BorderPane) loader.load();
 
-            // Show the scene containing the root layout.
+            // Show the scene containing the root layout
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
             primaryStage.show();
@@ -98,20 +80,17 @@ public class MainApp extends Application {
         }
     }
 
-    /**
-     * Shows the person overview inside the root layout.
-     */
     public void showPersonOverview() {
         try {
-            // Load person overview.
+            // Load person overview
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("PersonOverview.fxml"));
             AnchorPane personOverview = (AnchorPane) loader.load();
 
-            // Set person overview into the center of root layout.
+            // Set person overview into the center of root layout
             rootLayout.setCenter(personOverview);
 
-            // Give the controller access to the main app.
+            // Give the controller access to the main app
             PersonOverviewController controller = loader.getController();
             controller.setMainApp(this);
         } catch (IOException e) {
@@ -119,22 +98,14 @@ public class MainApp extends Application {
         }
     }
 
-    /**
-     * Opens a dialog to edit details for the specified person. If the user
-     * clicks OK, the changes are saved into the provided person object and true
-     * is returned.
-     *
-     * @param person the person object to be edited
-     * @return true if the user clicked OK, false otherwise.
-     */
     public boolean showPersonEditDialog(Person person) {
         try {
-            // Load the fxml file and create a new stage for the popup dialog.
+            // Load the fxml file and create a new stage for the popup dialog
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("PersonEditDialog.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
 
-            // Create the dialog Stage.
+            // Create the dialog Stage
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Edit Person");
             dialogStage.initModality(Modality.WINDOW_MODAL);
@@ -142,10 +113,11 @@ public class MainApp extends Application {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            // Set the person into the controller.
+            // Set the person into the controller
             PersonEditDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage);
             controller.setPerson(person);
+            controller.setModelo(agendaModelo);  // Inyectar agendaModelo en el controlador
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
@@ -157,12 +129,9 @@ public class MainApp extends Application {
         }
     }
 
-    /**
-     * Opens a dialog to show birthday statistics.
-     */
     public void showBirthdayStatistics() {
         try {
-            // Load the fxml file and create a new stage for the popup.
+            // Load the fxml file and create a new stage for the popup
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("BirthdayStatistics.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
@@ -173,12 +142,11 @@ public class MainApp extends Application {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            // Set the persons into the controller.
+            // Set the persons into the controller
             BirthdayStatisticsController controller = loader.getController();
             controller.setPersonData(personData);
 
             dialogStage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
         }

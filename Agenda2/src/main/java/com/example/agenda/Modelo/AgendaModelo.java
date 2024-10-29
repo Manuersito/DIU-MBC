@@ -11,6 +11,7 @@ public class AgendaModelo {
 PersonRepository personRepository;
 PersonUtil personUtil;
 
+
 public AgendaModelo() {
     this.personUtil = new PersonUtil();
 }
@@ -33,5 +34,18 @@ public AgendaModelo() {
 
         return listaPersonas;
     }
+
+    public void nuevoPerson(PersonVO personVO) throws ExcepcionPerson {
+        personRepository.addPersona(personVO);
+    }
+
+    public void actualizarPerson(PersonVO personVO) throws ExcepcionPerson {
+        personRepository.editPersona(personVO);
+    }
+
+    public void eliminarPerson(int personId) throws ExcepcionPerson {
+        personRepository.deletePersona(personId);
+    }
+
 
 }

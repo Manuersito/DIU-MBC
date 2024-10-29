@@ -1,13 +1,18 @@
 package com.example.agenda.controller;
 
+import com.example.agenda.Modelo.AgendaModelo;
+import com.example.agenda.Modelo.ExcepcionPerson;
+import com.example.agenda.Modelo.PersonVO;
+import com.example.agenda.Person;
+import com.example.agenda.util.DateUtil;
+import com.example.agenda.util.PersonUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import com.example.agenda.Person;
-import com.example.agenda.util.DateUtil;
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class PersonEditDialogController {
 
@@ -23,33 +28,24 @@ public class PersonEditDialogController {
     private TextField cityField;
     @FXML
     private TextField birthdayField;
-    
+
     private Stage dialogStage;
     private Person person;
     private boolean okClicked = false;
+    private AgendaModelo modelo;
+    private PersonUtil personUtil;
 
-    /**
-     * Initializes the controller class. This method is automatically called
-     * after the fxml file has been loaded.
-     */
-    @FXML
-    private void initialize() {
+    public void setModelo(AgendaModelo modelo) {
+        this.modelo = modelo;
     }
 
-    /**
-     * Sets the stage of this dialog.
-     *
-     * @param dialogStage
-     */
+    @FXML
+    private void initialize() {}
+
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
 
-    /**
-     * Sets the person to be edited in the dialog.
-     *
-     * @param person
-     */
     public void setPerson(Person person) {
         this.person = person;
 
@@ -62,18 +58,10 @@ public class PersonEditDialogController {
         birthdayField.setPromptText("dd.mm.yyyy");
     }
 
-    /**
-     * Returns true if the user clicked OK, false otherwise.
-     *
-     * @return
-     */
     public boolean isOkClicked() {
         return okClicked;
     }
 
-    /**
-     * Called when the user clicks ok.
-     */
     @FXML
     private void handleOk() {
         if (isInputValid()) {
@@ -84,23 +72,24 @@ public class PersonEditDialogController {
             person.setPostalCode(Integer.parseInt(postalCodeField.getText()));
             person.setBirthday(DateUtil.parse(birthdayField.getText()));
             okClicked = true;
+
+            try {
+                List<Person> personsList = new ArrayList<>();
+                personsList.add(person);
+                PersonVO personVO = personUtil.getPersonasVO((ArrayList<Person>) personsList).get(0);
+                modelo.nuevoPerson(personVO);
+            } catch (ExcepcionPerson e) {
+                mostrarAlertaError("Error al guardar la persona", e.getMessage());
+            }
             dialogStage.close();
         }
     }
 
-    /**
-     * Called when the user clicks cancel.
-     */
     @FXML
     private void handleCancel() {
         dialogStage.close();
     }
 
-    /**
-     * Validates the user input in the text fields.
-     *
-     * @return true if the input is valid
-     */
     private boolean isInputValid() {
         String errorMessage = "";
 
@@ -119,7 +108,6 @@ public class PersonEditDialogController {
         if (postalCodeField.getText() == null || postalCodeField.getText().length() == 0) {
             errorMessage += "No valid postal code!\n";
         } else {
-            // try to parse the postal code into an int.
             try {
                 Integer.parseInt(postalCodeField.getText());
             } catch (NumberFormatException e) {
@@ -138,13 +126,16 @@ public class PersonEditDialogController {
         if (errorMessage.length() == 0) {
             return true;
         } else {
-            // Show the error message.
-            Alert alert=new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Invalid Fields");
-                    alert.setHeaderText("Please correct invalid fields");
-                    alert.setContentText(errorMessage);
-                    alert.showAndWait();
+            mostrarAlertaError("Invalid Fields", errorMessage);
             return false;
         }
+    }
+
+    private void mostrarAlertaError(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(titulo);
+        alert.setHeaderText("Please correct invalid fields");
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 }
