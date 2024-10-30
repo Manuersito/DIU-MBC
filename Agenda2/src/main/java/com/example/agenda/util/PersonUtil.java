@@ -11,7 +11,7 @@ public class PersonUtil {
         ArrayList<Person> personas = new ArrayList<>();
         for (PersonVO personVO : personasVO) {
             Person person = new Person();
-
+            person.setId(personVO.getId());
             person.setFirstName(personVO.getFirstName());
             person.setLastName(personVO.getLastName());
             person.setStreet(personVO.getStreet());
@@ -28,6 +28,7 @@ public class PersonUtil {
         ArrayList<PersonVO> personasVO = new ArrayList<>();
         for (Person person : personas) {
             PersonVO personVO = new PersonVO(
+                    person.getId(),
                     person.getFirstName(),
             person.getLastName(),
             person.getStreet(),
@@ -41,6 +42,12 @@ public class PersonUtil {
             personasVO.add(personVO);
         }
         return personasVO;
+    }
+
+
+    public PersonVO PersonToPersonVO(Person person) {
+        return new PersonVO(person.getId(), person.getFirstName(), person.getLastName(),
+                person.getStreet(), person.getCity(), person.getPostalCode(), person.getBirthday());
     }
 
 

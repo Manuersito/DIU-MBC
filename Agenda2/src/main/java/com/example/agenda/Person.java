@@ -11,6 +11,7 @@ import javafx.beans.property.StringProperty;
 
 public class Person {
 
+    private final IntegerProperty id;
     private final StringProperty firstName;
     private final StringProperty lastName;
     private final StringProperty street;
@@ -32,14 +33,27 @@ public class Person {
      * @param lastName
      */
     public Person(String firstName, String lastName) {
+        this.id = new SimpleIntegerProperty();
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
 
         // Some initial dummy data, just for convenient testing.
         this.street = new SimpleStringProperty("Una calle");
-        this.city = new SimpleStringProperty("Una ciudad");
         this.postalCode = new SimpleIntegerProperty(11111);
+        this.city = new SimpleStringProperty("Una ciudad");
         this.birthday = new SimpleObjectProperty<LocalDate>(LocalDate.of(2005, 10, 15));
+    }
+
+    public int getId() {
+        return id.get();
+    }
+
+    public void setId(int id) {
+        this.id.set(id);
+    }
+
+    public IntegerProperty idProperty() {
+        return id;
     }
 
     public String getFirstName() {

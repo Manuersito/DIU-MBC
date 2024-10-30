@@ -1,6 +1,10 @@
 package com.example.agenda.controller;
 
+import com.example.agenda.Modelo.AgendaModelo;
+import com.example.agenda.Modelo.ExcepcionPerson;
+import com.example.agenda.Modelo.PersonVO;
 import com.example.agenda.util.DateUtil;
+import com.example.agenda.util.PersonUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -9,6 +13,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import com.example.agenda.MainApp;
 import com.example.agenda.Person;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PersonOverviewController {
     @FXML
@@ -30,6 +37,15 @@ public class PersonOverviewController {
     private Label cityLabel;
     @FXML
     private Label birthdayLabel;
+
+    private Person person = new Person();
+    private PersonUtil personUtil = new PersonUtil();
+
+    private AgendaModelo modelo = new AgendaModelo();
+
+    public void setModelo(AgendaModelo modelo) {
+        this.modelo = modelo;
+    }
 
     // Reference to the main application.
     private MainApp mainApp;
@@ -104,10 +120,12 @@ public class PersonOverviewController {
     /**
      * Called when the user clicks on the delete button.
      */
-    private void handleDeletePerson() {
+    private void handleDeletePerson() throws ExcepcionPerson{
         int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
+            Integer cod = personTable.getItems().get(selectedIndex).getId();
             personTable.getItems().remove(selectedIndex);
+            modelo.eliminarPerson(cod);
         } else {
             // Nothing selected.
             Alert alert= new Alert(AlertType.WARNING);
@@ -127,9 +145,17 @@ public class PersonOverviewController {
         Person tempPerson = new Person();
         boolean okClicked = mainApp.showPersonEditDialog(tempPerson);
         if (okClicked) {
-            mainApp.getPersonData().add(tempPerson);
+            try {
+                List<Person> personsList = new ArrayList<>();
+                personsList.add(tempPerson);  // Cambiado a tempPerson
+                PersonVO personVO = personUtil.getPersonasVO((ArrayList<Person>) personsList).get(0);
+                modelo.nuevoPerson(personVO);
+            } catch (ExcepcionPerson e) {
+                mostrarAlertaError("Error al guardar la persona", e.getMessage());
+            }
         }
     }
+
 
     /**
      * Called when the user clicks the edit button. Opens a dialog to edit
@@ -139,18 +165,42 @@ public class PersonOverviewController {
     private void handleEditPerson() {
         Person selectedPerson = personTable.getSelectionModel().getSelectedItem();
         if (selectedPerson != null) {
+            // Abrir el diálogo de edición
             boolean okClicked = mainApp.showPersonEditDialog(selectedPerson);
-            if (okClicked) {
-                showPersonDetails(selectedPerson);
-            }
 
+            if (okClicked) {
+                try {
+                    // Convertir la persona seleccionada a PersonVO
+                    List<Person> personsList = new ArrayList<>();
+                    personsList.add(selectedPerson);
+                    PersonVO personVO = personUtil.getPersonasVO((ArrayList<Person>) personsList).get(0);
+
+                    // Llamar al método para actualizar la persona en la base de datos
+                    modelo.actualizarPerson(personVO);
+
+                    // Mostrar detalles actualizados en la vista
+                    showPersonDetails(selectedPerson);
+                } catch (ExcepcionPerson e) {
+                    mostrarAlertaError("Error al editar la persona", e.getMessage());
+                }
+            }
         } else {
-            // Nothing selected.
-            Alert alert=new Alert(AlertType.WARNING);
-                    alert.setTitle("No Selection");
-                    alert.setHeaderText("No Person Selected");
-                    alert.setContentText("Please select a person in the table.");
-                    alert.showAndWait();
+            // Mostrar una alerta si no hay ninguna persona seleccionada
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("No Selection");
+            alert.setHeaderText("No Person Selected");
+            alert.setContentText("Please select a person in the table.");
+            alert.showAndWait();
         }
     }
+
+
+    private void mostrarAlertaError(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(titulo);
+        alert.setHeaderText("Please correct invalid fields");
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+
 }

@@ -32,12 +32,7 @@ public class PersonEditDialogController {
     private Stage dialogStage;
     private Person person;
     private boolean okClicked = false;
-    private AgendaModelo modelo;
-    private PersonUtil personUtil;
 
-    public void setModelo(AgendaModelo modelo) {
-        this.modelo = modelo;
-    }
 
     @FXML
     private void initialize() {}
@@ -52,8 +47,8 @@ public class PersonEditDialogController {
         firstNameField.setText(person.getFirstName());
         lastNameField.setText(person.getLastName());
         streetField.setText(person.getStreet());
-        cityField.setText(person.getCity());
         postalCodeField.setText(Integer.toString(person.getPostalCode()));
+        cityField.setText(person.getCity());
         birthdayField.setText(DateUtil.format(person.getBirthday()));
         birthdayField.setPromptText("dd.mm.yyyy");
     }
@@ -68,19 +63,10 @@ public class PersonEditDialogController {
             person.setFirstName(firstNameField.getText());
             person.setLastName(lastNameField.getText());
             person.setStreet(streetField.getText());
-            person.setCity(cityField.getText());
             person.setPostalCode(Integer.parseInt(postalCodeField.getText()));
+            person.setCity(cityField.getText());
             person.setBirthday(DateUtil.parse(birthdayField.getText()));
             okClicked = true;
-
-            try {
-                List<Person> personsList = new ArrayList<>();
-                personsList.add(person);
-                PersonVO personVO = personUtil.getPersonasVO((ArrayList<Person>) personsList).get(0);
-                modelo.nuevoPerson(personVO);
-            } catch (ExcepcionPerson e) {
-                mostrarAlertaError("Error al guardar la persona", e.getMessage());
-            }
             dialogStage.close();
         }
     }

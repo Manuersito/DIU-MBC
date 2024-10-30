@@ -93,6 +93,9 @@ public class MainApp extends Application {
             // Give the controller access to the main app
             PersonOverviewController controller = loader.getController();
             controller.setMainApp(this);
+
+
+            controller.setModelo(agendaModelo);  // Inyectar agendaModelo en el controlador
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -117,7 +120,7 @@ public class MainApp extends Application {
             PersonEditDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage);
             controller.setPerson(person);
-            controller.setModelo(agendaModelo);  // Inyectar agendaModelo en el controlador
+
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
