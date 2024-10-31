@@ -10,7 +10,7 @@ public class AgendaModelo {
 
 PersonRepository personRepository;
 PersonUtil personUtil;
-
+private final int MAX_PERSONS = 50;
 
 public AgendaModelo() {
     this.personUtil = new PersonUtil();
@@ -47,6 +47,7 @@ public AgendaModelo() {
     public void eliminarPerson(int personId) throws ExcepcionPerson {
         personRepository.deletePersona(personId);
     }
+
 
 
 }

@@ -124,8 +124,8 @@ public class PersonOverviewController {
         int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             Integer cod = personTable.getItems().get(selectedIndex).getId();
-            personTable.getItems().remove(selectedIndex);
             modelo.eliminarPerson(cod);
+            personTable.getItems().remove(selectedIndex);
         } else {
             // Nothing selected.
             Alert alert= new Alert(AlertType.WARNING);
@@ -150,6 +150,7 @@ public class PersonOverviewController {
                 personsList.add(tempPerson);  // Cambiado a tempPerson
                 PersonVO personVO = personUtil.getPersonasVO((ArrayList<Person>) personsList).get(0);
                 modelo.nuevoPerson(personVO);
+                personTable.getItems().add(tempPerson);
             } catch (ExcepcionPerson e) {
                 mostrarAlertaError("Error al guardar la persona", e.getMessage());
             }
@@ -173,8 +174,10 @@ public class PersonOverviewController {
                     // Convertir la persona seleccionada a PersonVO
                     List<Person> personsList = new ArrayList<>();
                     personsList.add(selectedPerson);
-                    PersonVO personVO = personUtil.getPersonasVO((ArrayList<Person>) personsList).get(0);
 
+
+                    PersonVO personVO = personUtil.PersonToPersonVO(selectedPerson);
+                    //personUtil.getPersonasVO((ArrayList<Person>) personsList).get(0);
                     // Llamar al método para actualizar la persona en la base de datos
                     modelo.actualizarPerson(personVO);
 

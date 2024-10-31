@@ -2,17 +2,16 @@ package com.example.agenda.controller;
 
 import com.example.agenda.Modelo.AgendaModelo;
 import com.example.agenda.Modelo.ExcepcionPerson;
-import com.example.agenda.Modelo.PersonVO;
 import com.example.agenda.Person;
 import com.example.agenda.util.DateUtil;
-import com.example.agenda.util.PersonUtil;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PersonEditDialogController {
 
@@ -28,17 +27,30 @@ public class PersonEditDialogController {
     private TextField cityField;
     @FXML
     private TextField birthdayField;
+    @FXML
+    private ProgressBar progressBar; // Referencia a la ProgressBar en el FXML
 
     private Stage dialogStage;
     private Person person;
     private boolean okClicked = false;
+    private AgendaModelo modelo;
+
+    public PersonEditDialogController() throws ExcepcionPerson {
+    }
+
 
 
     @FXML
-    private void initialize() {}
+    private void initialize() {
+
+    }
 
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
+    }
+
+    public void setAgendaModelo(AgendaModelo modelo) {
+        this.modelo = modelo;
     }
 
     public void setPerson(Person person) {
@@ -67,6 +79,9 @@ public class PersonEditDialogController {
             person.setCity(cityField.getText());
             person.setBirthday(DateUtil.parse(birthdayField.getText()));
             okClicked = true;
+
+            // Actualiza la barra de progreso después de añadir una persona
+
             dialogStage.close();
         }
     }
@@ -75,6 +90,8 @@ public class PersonEditDialogController {
     private void handleCancel() {
         dialogStage.close();
     }
+
+
 
     private boolean isInputValid() {
         String errorMessage = "";
