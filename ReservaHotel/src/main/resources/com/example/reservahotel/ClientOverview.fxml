@@ -7,27 +7,38 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="988.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TableView prefHeight="416.0" prefWidth="232.0">
-        <columns>
-          <TableColumn prefWidth="107.0" text="Nombre" />
-          <TableColumn prefWidth="124.0" text="Apellido" />
-        </columns>
-      </TableView>
-      <TableView layoutX="506.0" prefHeight="416.0" prefWidth="193.0">
-        <columns>
-          <TableColumn prefWidth="192.0" text="Lista Reserva" />
-        </columns>
-      </TableView>
+       <TableView fx:id="clientTable" prefHeight="416.0" prefWidth="232.0">
+           <columns>
+               <TableColumn fx:id="firstNameColumn" prefWidth="107.0" text="Nombre" />
+               <TableColumn fx:id="lastNameColumn" prefWidth="124.0" text="Apellido" />
+           </columns>
+       </TableView>
+       <TableView fx:id="reservationTable" layoutX="506.0" prefHeight="416.0" prefWidth="193.0">
+           <columns>
+               <TableColumn fx:id="reservationColumn" prefWidth="192.0" text="Lista Reserva" />
+           </columns>
+       </TableView>
       <GridPane layoutX="232.0" layoutY="63.0" prefHeight="354.0" prefWidth="274.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
+         <children>
+            <Label text="DNI" />
+            <Label text="Nombre" GridPane.rowIndex="1" />
+            <Label text="Apellidos" GridPane.rowIndex="2" />
+            <Label text="Direccion" GridPane.rowIndex="3" />
+            <Label text="Localidad" GridPane.rowIndex="4" />
+            <Label text="Provincia" GridPane.rowIndex="5" />
+         </children>
       </GridPane>
       <GridPane layoutX="699.0" layoutY="63.0" prefHeight="354.0" prefWidth="289.0">
         <columnConstraints>
@@ -35,6 +46,9 @@
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -50,12 +64,12 @@
             <Font size="33.0" />
          </font>
       </Label>
-      <Button layoutX="64.0" layoutY="437.0" mnemonicParsing="false" text="Añadir Cliente" />
-      <Button layoutX="242.0" layoutY="437.0" mnemonicParsing="false" text="Editar Cliente" />
-      <Button layoutX="391.0" layoutY="437.0" mnemonicParsing="false" text="Borrar Cliente" />
-      <Button layoutX="548.0" layoutY="437.0" mnemonicParsing="false" text="Añadir Reserva" />
-      <Button layoutX="723.0" layoutY="437.0" mnemonicParsing="false" text="Editar Reserva" />
-      <Button layoutX="863.0" layoutY="437.0" mnemonicParsing="false" text="Borrar Reserva" />
-      <TextField layoutX="35.0" layoutY="472.0" text="DNI" />
+       <Button fx:id="addClientButton" layoutX="64.0" layoutY="437.0" mnemonicParsing="false" text="Añadir Cliente" />
+       <Button fx:id="editClientButton" layoutX="242.0" layoutY="437.0" mnemonicParsing="false" text="Editar Cliente" />
+       <Button fx:id="deleteClientButton" layoutX="391.0" layoutY="437.0" mnemonicParsing="false" text="Borrar Cliente" />
+       <Button fx:id="addReservationButton" layoutX="548.0" layoutY="437.0" mnemonicParsing="false" text="Añadir Reserva" />
+       <Button fx:id="editReservationButton" layoutX="723.0" layoutY="437.0" mnemonicParsing="false" text="Editar Reserva" />
+       <Button fx:id="deleteReservationButton" layoutX="863.0" layoutY="437.0" mnemonicParsing="false" text="Borrar Reserva" />
+       <TextField fx:id="dniField" layoutX="35.0" layoutY="472.0" text="DNI" />
    </children>
 </Pane>
