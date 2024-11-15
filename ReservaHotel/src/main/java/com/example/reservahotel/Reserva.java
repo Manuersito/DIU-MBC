@@ -9,7 +9,7 @@ import javafx.beans.property.StringProperty;
 
 import java.time.LocalDate;
 
-public class Reserva {
+public class Reserva{
 
     private final IntegerProperty id;
     private final StringProperty fechaEntrada;

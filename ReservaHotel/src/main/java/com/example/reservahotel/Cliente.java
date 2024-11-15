@@ -109,4 +109,16 @@ public class Cliente {
     public StringProperty stateProperty() {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "dni=" + dni +
+                ", firstName=" + firstName +
+                ", lastName=" + lastName +
+                ", street=" + street +
+                ", city=" + city +
+                ", state=" + state +
+                '}';
+    }
 }

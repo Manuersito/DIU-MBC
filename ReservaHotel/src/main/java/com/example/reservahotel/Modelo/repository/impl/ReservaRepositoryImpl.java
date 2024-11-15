@@ -3,10 +3,7 @@ package com.example.reservahotel.Modelo.repository.impl;
 import com.example.reservahotel.Modelo.ReservaVO;
 import com.example.reservahotel.Modelo.repository.ExcepcionReserva;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -18,6 +15,44 @@ public class ReservaRepositoryImpl {
     private ArrayList<ReservaVO> reservas;
 
     public ReservaRepositoryImpl() {
+    }
+
+
+    public ArrayList<ReservaVO> obtenerReservaCliente(String dni) throws ExcepcionReserva {
+        ArrayList<ReservaVO> reservaVOS = new ArrayList<>();
+
+        // Definir la conexión y el PreparedStatement
+        try (Connection conn = this.conexion.conectarBD();
+             PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM reserva WHERE dni_cliente = ?")) {
+
+            // Establecer el valor del parámetro
+            pstmt.setString(1, dni);
+
+            // Ejecutar la consulta
+            ResultSet rs = pstmt.executeQuery();
+
+            // Iterar sobre los resultados
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                LocalDate llegada = rs.getDate("fecha_entrada").toLocalDate();
+                LocalDate salida = rs.getDate("fecha_salida").toLocalDate();
+                Integer numero = rs.getInt("num_habitaciones");
+                String tipo = rs.getString("tipo_habitacion");
+                boolean fumador = rs.getBoolean("fumador");
+                String regimen = rs.getString("regimen");
+                String dni_cliente = rs.getString("dni_cliente");
+
+                // Crear un objeto ReservaVO y añadirlo a la lista
+                ReservaVO reservaVO1 = new ReservaVO(id, llegada, salida,numero, tipo, regimen, fumador, dni_cliente);
+                reservaVOS.add(reservaVO1);
+            }
+
+        } catch (SQLException var6) {
+            // Lanzar una excepción si ocurre un error en la base de datos
+            throw new ExcepcionReserva("No se ha podido realizar la descarga de los datos");
+        }
+
+        return reservaVOS;
     }
 
     public ArrayList<ReservaVO> obtenerListaReservas() throws ExcepcionReserva {

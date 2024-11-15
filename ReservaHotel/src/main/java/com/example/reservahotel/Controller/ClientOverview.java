@@ -1,11 +1,14 @@
 package com.example.reservahotel.Controller;
 
 import com.example.reservahotel.Modelo.ModeloHotel;
-import com.example.reservahotel.Modelo.ClienteVO;
-import com.example.reservahotel.Modelo.repository.ExcepcionCliente;
-import com.example.reservahotel.Util.ClientUtil;
 import com.example.reservahotel.Cliente;
 import com.example.reservahotel.MainApp;
+import com.example.reservahotel.Modelo.ReservaVO;
+import com.example.reservahotel.Reserva;
+import com.example.reservahotel.Util.ReservaUtil;
+import eu.hansolo.tilesfx.tools.DoubleExponentialSmoothingForLinearSeries;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -14,41 +17,77 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ClientOverview {
+    ObservableList<Reserva> reservaObservableList = FXCollections.observableArrayList();
+    ArrayList<Reserva> reservas = new ArrayList<>();
 
     @FXML
-    private TableView<Cliente> personTable;
+    private TableView<Reserva> reservationTable;
+    @FXML
+    private TableColumn<Reserva, String> reservationColumn;
+
+    @FXML
+    private TableView<Cliente> clientTable;
     @FXML
     private TableColumn<Cliente, String> firstNameColumn;
     @FXML
     private TableColumn<Cliente, String> lastNameColumn;
 
     @FXML
-    private Label firstNameLabel;
+    private Label dniLabel;
     @FXML
-    private Label lastNameLabel;
+    private Label nombreLabel;
     @FXML
-    private Label streetLabel;
+    private Label apellidoLabel;
     @FXML
-    private Label cityLabel;
+    private Label direccionLabel;
+    @FXML
+    private Label localidadLabel;
+    @FXML
+    private Label provinciaLabel;
+
+    @FXML
+    private Label entradaLabel;
+    @FXML
+    private Label salidaLabel;
+    @FXML
+    private Label numLabel;
+    @FXML
+    private Label tipoLabel;
+    @FXML
+    private Label regimenLabel;
+    @FXML
+    private Label fumadorLabel;
 
     private ModeloHotel modelo;
-    private ClientUtil personUtil = new ClientUtil();
     private MainApp mainApp;
+    private ReservaUtil reservaUtil = new ReservaUtil();
 
     @FXML
     private void initialize() {
+        // Configura las columnas de la tabla con las propiedades correctas
         firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
         lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
-
+        reservationColumn.setCellValueFactory(cellData -> cellData.getValue().fechaEntradaProperty());
         // Limpiar los detalles del cliente
         showPersonDetails(null);
 
         // Escuchar cambios de selección en la tabla
-        personTable.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> showPersonDetails(newValue));
+        clientTable.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        showPersonDetails(newValue);
+                        loadReservasData(newValue.getDni());
+                    } else{
+                        reservationTable.getItems().clear();
+                    }
+
+                });
+
+        reservationTable.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> showReservaDetails(newValue));
+
     }
 
     public void setModelo(ModeloHotel modelo) {
@@ -57,32 +96,79 @@ public class ClientOverview {
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
-        personTable.setItems(mainApp.getPersonData());
+        clientTable.setItems(mainApp.getPersonData());  // Se pasan los datos al TableView
     }
 
     private void showPersonDetails(Cliente cliente) {
         if (cliente != null) {
-            firstNameLabel.setText(cliente.getFirstName());
-            lastNameLabel.setText(cliente.getLastName());
-            streetLabel.setText(cliente.getStreet());
-            cityLabel.setText(cliente.getCity());
+            dniLabel.setText(cliente.getDni());
+            nombreLabel.setText(cliente.getFirstName());
+            apellidoLabel.setText(cliente.getLastName());
+            direccionLabel.setText(cliente.getStreet());
+            localidadLabel.setText(cliente.getCity());
+            provinciaLabel.setText(cliente.getState());
+
+
         } else {
-            firstNameLabel.setText("");
-            lastNameLabel.setText("");
-            streetLabel.setText("");
-            cityLabel.setText("");
+            dniLabel.setText("");
+            nombreLabel.setText("");
+            apellidoLabel.setText("");
+            direccionLabel.setText("");
+            localidadLabel.setText("");
+            provinciaLabel.setText("");
+        }
+    }
+    public void loadReservasData(String dniCliente) {
+        try {
+            if (dniCliente != null && !dniCliente.isEmpty()) {
+                ObservableList<Reserva> reservaData = FXCollections.observableArrayList(modelo.mostrarReservas(dniCliente));
+
+                if (reservaData.isEmpty()) {
+                    mostrarAlertaError("Sin reservas", "Este cliente es pobre.");
+                    reservationTable.getItems().clear();
+                } else {
+                    reservationTable.setItems(reservaData);
+                }
+            } else {
+                mostrarAlertaError("Error DNI", "El DNI del cliente no está registrado.");
+            }
+        } catch (Exception e) {
+            mostrarAlertaError("Error al cargar", "error: " + e.getMessage());
+        }
+    }
+    private void showReservaDetails(Reserva reserva) {
+        if (reserva != null) {
+            entradaLabel.setText(reserva.getFechaEntrada());
+            salidaLabel.setText(reserva.getFechaSalida());
+            numLabel.setText(String.valueOf(reserva.getNumHabitaciones()));
+            tipoLabel.setText(reserva.getTipoHabitacion());
+            regimenLabel.setText(reserva.getRegimen());
+            fumadorLabel.setText(String.valueOf(reserva.isFumador()));
+
+            reservaObservableList.clear();
+
+            reservas = reservaUtil.fromReservaVOListToReservaList(modelo.getReservas(reserva.getDniCliente()));
+            reservaObservableList.addAll(reservas);
+            reservationTable.setItems(reservaObservableList);
+        } else {
+            entradaLabel.setText("");
+            salidaLabel.setText("");
+            numLabel.setText("");
+            tipoLabel.setText("");
+            regimenLabel.setText("");
+            fumadorLabel.setText("");
         }
     }
 
     @FXML
     private void handleDeletePerson() {
-        int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
+        int selectedIndex = clientTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-            String cod = personTable.getItems().get(selectedIndex).getDni();
+            String cod = clientTable.getItems().get(selectedIndex).getDni();
             try {
                 modelo.eliminarPerson(cod);
-                personTable.getItems().remove(selectedIndex);
-            } catch (ExcepcionCliente e) {
+                clientTable.getItems().remove(selectedIndex);
+            } catch (Exception e) {
                 mostrarAlertaError("Error al eliminar", e.getMessage());
             }
         } else {
@@ -94,46 +180,6 @@ public class ClientOverview {
         }
     }
 
-//    @FXML
-//    private void handleNewPerson() {
-//        Cliente tempPerson = new Cliente();
-//        boolean okClicked = mainApp.showClientEditDialog(tempPerson);
-//        if (okClicked) {
-//            try {
-//                List<Cliente> personsList = new ArrayList<>();
-//                personsList.add(tempPerson);
-//                ClienteVO clientVO = personUtil.getClientesVO((ArrayList<Cliente>) personsList).get(0);
-//                modelo.nuevoPerson(clientVO);
-//                personTable.getItems().add(tempPerson);
-//            } catch (ExcepcionCliente e) {
-//                mostrarAlertaError("Error al guardar la persona", e.getMessage());
-//            }
-//        }
-//    }
-
-//    @FXML
-//    private void handleEditPerson() {
-//        Cliente selectedPerson = personTable.getSelectionModel().getSelectedItem();
-//        if (selectedPerson != null) {
-//            boolean okClicked = mainApp.showClientEditDialog(selectedPerson);
-//            if (okClicked) {
-//                try {
-//                    ClienteVO personVO = personUtil.clienteToClienteVO(selectedPerson);
-//                    modelo.actualizarPerson(personVO);
-//                    showPersonDetails(selectedPerson);
-//                } catch (ExcepcionCliente e) {
-//                    mostrarAlertaError("Error al editar la persona", e.getMessage());
-//                }
-//            }
-//        } else {
-//            Alert alert = new Alert(AlertType.WARNING);
-//            alert.setTitle("No Selection");
-//            alert.setHeaderText("No Person Selected");
-//            alert.setContentText("Please select a person in the table.");
-//            alert.showAndWait();
-//        }
-//    }
-//
     private void mostrarAlertaError(String titulo, String mensaje) {
         Alert alert = new Alert(AlertType.WARNING);
         alert.setTitle(titulo);

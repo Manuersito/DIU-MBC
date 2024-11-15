@@ -75,6 +75,8 @@ public class MainApp extends Application {
                 controller.setModelo(modeloHotel);
             }
 
+            System.out.println(personData.toString());
+
         } catch (IOException e) {
             e.printStackTrace();
         }
