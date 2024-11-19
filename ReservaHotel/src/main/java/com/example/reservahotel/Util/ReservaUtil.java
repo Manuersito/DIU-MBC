@@ -20,8 +20,8 @@ public class ReservaUtil {
                 reservaVO.getFechaEntrada().toString(),  // Convierte LocalDate a String
                 reservaVO.getFechaSalida().toString(),   // Convierte LocalDate a String
                 reservaVO.getNumHabitaciones(),
-                reservaVO.getTipoHabitacion(),
-                reservaVO.getRegimen(),
+                reservaVO.getTipoHabitacion().toString(),
+                reservaVO.getRegimen().toString(),
                 reservaVO.isFumador(),
                 reservaVO.getDniCliente()
         );

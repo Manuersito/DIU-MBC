@@ -21,14 +21,17 @@ public class ClientRepositoryImpl {
     }
 
     public ArrayList<ClienteVO> ObtenerListaPersonas() throws ExcepcionCliente {
+        ArrayList<ClienteVO> personas = new ArrayList<>();
+
         try {
             Connection conn = this.conexion.conectarBD();
-            this.personas = new ArrayList<>();
+            System.out.println("Conexión establecida: " + (conn != null));
+
             this.stmt = conn.createStatement();
             this.sentencia = "SELECT * FROM cliente";
             ResultSet rs = this.stmt.executeQuery(this.sentencia);
 
-            while(rs.next()) {
+            while (rs.next()) {
                 String dni = rs.getString("dni");
                 String nombre = rs.getString("nombre");
                 String apellidos = rs.getString("apellidos");
@@ -36,16 +39,20 @@ public class ClientRepositoryImpl {
                 String localidad = rs.getString("localidad");
                 String provincia = rs.getString("provincia");
 
-                this.persona = new ClienteVO(dni, nombre, apellidos, direccion, localidad, provincia);
-                this.personas.add(this.persona);
+                ClienteVO persona = new ClienteVO(dni, nombre, apellidos, direccion, localidad, provincia);
+                personas.add(persona);
             }
 
+            System.out.println("Número de clientes obtenidos: " + personas.size());
+
             this.conexion.desconectarBD(conn);
-            return this.personas;
+            return personas;
         } catch (SQLException e) {
-            throw new ExcepcionCliente("No se ha podido realizar la operación");
+            throw new ExcepcionCliente("No se ha podido realizar la operación: " + e.getMessage());
         }
     }
+
+
 
     public void addPersona(ClienteVO m) throws ExcepcionCliente {
         try {

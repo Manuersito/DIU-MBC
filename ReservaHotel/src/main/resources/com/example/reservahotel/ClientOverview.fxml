@@ -86,10 +86,10 @@
       </Label>
        <Button fx:id="addClientButton" layoutX="64.0" layoutY="437.0" mnemonicParsing="false" text="Añadir Cliente" />
        <Button fx:id="editClientButton" layoutX="242.0" layoutY="437.0" mnemonicParsing="false" text="Editar Cliente" />
-       <Button fx:id="deleteClientButton" layoutX="391.0" layoutY="437.0" mnemonicParsing="false" text="Borrar Cliente" />
+       <Button fx:id="deleteClientButton" layoutX="391.0" layoutY="437.0" mnemonicParsing="false" onAction="#deleteClientButton" text="Borrar Cliente" />
        <Button fx:id="addReservationButton" layoutX="548.0" layoutY="437.0" mnemonicParsing="false" text="Añadir Reserva" />
        <Button fx:id="editReservationButton" layoutX="723.0" layoutY="437.0" mnemonicParsing="false" text="Editar Reserva" />
-       <Button fx:id="deleteReservationButton" layoutX="863.0" layoutY="437.0" mnemonicParsing="false" text="Borrar Reserva" />
+       <Button fx:id="deleteReservationButton" layoutX="863.0" layoutY="437.0" mnemonicParsing="false" onAction="#deleteReservationButton" text="Borrar Reserva" />
        <TextField fx:id="dniField" layoutX="35.0" layoutY="472.0" text="DNI" />
    </children>
 </Pane>

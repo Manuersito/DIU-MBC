@@ -124,7 +124,7 @@ public class ClientOverview {
                 ObservableList<Reserva> reservaData = FXCollections.observableArrayList(modelo.mostrarReservas(dniCliente));
 
                 if (reservaData.isEmpty()) {
-                    mostrarAlertaError("Sin reservas", "Este cliente es pobre.");
+                    mostrarAlertaError("Sin reservas", "Este cliente no tiene reservas.");
                     reservationTable.getItems().clear();
                 } else {
                     reservationTable.setItems(reservaData);
@@ -133,11 +133,13 @@ public class ClientOverview {
                 mostrarAlertaError("Error DNI", "El DNI del cliente no está registrado.");
             }
         } catch (Exception e) {
-            mostrarAlertaError("Error al cargar", "error: " + e.getMessage());
+            mostrarAlertaError("Error al cargar", "Error: " + e.getMessage());
         }
     }
-    private void showReservaDetails(Reserva reserva) {
+
+    public void showReservaDetails(Reserva reserva) {
         if (reserva != null) {
+            // Aquí puedes obtener los detalles de la reserva correctamente
             entradaLabel.setText(reserva.getFechaEntrada());
             salidaLabel.setText(reserva.getFechaSalida());
             numLabel.setText(String.valueOf(reserva.getNumHabitaciones()));
@@ -147,10 +149,12 @@ public class ClientOverview {
 
             reservaObservableList.clear();
 
+            // Aquí parece que obtienes las reservas asociadas al cliente
             reservas = reservaUtil.fromReservaVOListToReservaList(modelo.getReservas(reserva.getDniCliente()));
             reservaObservableList.addAll(reservas);
             reservationTable.setItems(reservaObservableList);
         } else {
+            // Limpiar los campos si no hay reserva seleccionada
             entradaLabel.setText("");
             salidaLabel.setText("");
             numLabel.setText("");
@@ -160,8 +164,9 @@ public class ClientOverview {
         }
     }
 
+
     @FXML
-    private void handleDeletePerson() {
+    private void deleteClientButton() {
         int selectedIndex = clientTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             String cod = clientTable.getItems().get(selectedIndex).getDni();
@@ -179,6 +184,27 @@ public class ClientOverview {
             alert.showAndWait();
         }
     }
+
+    @FXML
+    private void deleteReservationButton() {
+        int selectedIndex = reservationTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            int cod = (reservationTable.getItems().get(selectedIndex).getId());
+            try {
+                modelo.eliminarReserva(cod);
+                reservationTable.getItems().remove(selectedIndex);
+            } catch (Exception e) {
+                mostrarAlertaError("Error al eliminar", e.getMessage());
+            }
+        } else {
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("No Selection");
+            alert.setHeaderText("No Person Selected");
+            alert.setContentText("Please select a person in the table.");
+            alert.showAndWait();
+        }
+    }
+
 
     private void mostrarAlertaError(String titulo, String mensaje) {
         Alert alert = new Alert(AlertType.WARNING);

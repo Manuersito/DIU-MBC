@@ -4,6 +4,7 @@ import com.example.reservahotel.Controller.ClientOverview;
 import com.example.reservahotel.Modelo.ModeloHotel;
 import com.example.reservahotel.Modelo.repository.ExcepcionCliente;
 import com.example.reservahotel.Modelo.repository.impl.ClientRepositoryImpl;
+import com.example.reservahotel.Modelo.repository.impl.ReservaRepositoryImpl;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,9 +25,10 @@ public class MainApp extends Application {
 
     public MainApp() {
         ClientRepositoryImpl clientRepository = new ClientRepositoryImpl();
+        ReservaRepositoryImpl reservaRepository = new ReservaRepositoryImpl();
         modeloHotel = new ModeloHotel();
         modeloHotel.setPersonRepository(clientRepository);
-
+        modeloHotel.setReservaRepository(reservaRepository);
 
         try {
             personData.addAll(modeloHotel.mostrar());

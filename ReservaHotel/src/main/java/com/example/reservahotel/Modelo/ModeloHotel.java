@@ -4,6 +4,7 @@ import com.example.reservahotel.Modelo.repository.ClientRepository;
 import com.example.reservahotel.Cliente;
 import com.example.reservahotel.Modelo.repository.ExcepcionCliente;
 import com.example.reservahotel.Modelo.repository.ExcepcionReserva;
+import com.example.reservahotel.Modelo.repository.ReservaRepository;
 import com.example.reservahotel.Modelo.repository.impl.ClientRepositoryImpl;
 import com.example.reservahotel.Modelo.repository.impl.ReservaRepositoryImpl;
 import com.example.reservahotel.Reserva;
@@ -30,6 +31,9 @@ public class ModeloHotel {
 
     public void setPersonRepository(ClientRepositoryImpl clientRepository) {
         this.clientRepository = clientRepository;
+    }
+    public void setReservaRepository(ReservaRepositoryImpl reservaRepository) {
+        this.reservaRepository = reservaRepository;
     }
 
     public ArrayList<ClienteVO> getPersons() throws ExcepcionCliente {
@@ -58,6 +62,10 @@ public class ModeloHotel {
 
     public void eliminarPerson(String personId) throws ExcepcionCliente {
         clientRepository.deletePersona(personId);
+    }
+
+    public void eliminarReserva(int reservaId) throws ExcepcionCliente {
+        reservaRepository.deleteReserva(reservaId);
     }
 
 

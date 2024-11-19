@@ -1,19 +1,20 @@
 package com.example.reservahotel.Modelo;
 
 import java.time.LocalDate;
+import  com.example.reservahotel.Modelo.repository.impl.regimen;
+import  com.example.reservahotel.Modelo.repository.impl.tipo_hab;
 
 public class ReservaVO {
     private int id;
     private LocalDate fechaEntrada;
     private LocalDate fechaSalida;
     private int numHabitaciones;
-    private String tipoHabitacion;
-    private String regimen;
+    private tipo_hab tipoHabitacion;
+    private regimen regimen;
     private boolean fumador;
     private String dniCliente;
 
-    public ReservaVO(int id, LocalDate fechaEntrada, LocalDate fechaSalida, int numHabitaciones,
-                     String tipoHabitacion, String regimen, boolean fumador, String dniCliente) {
+    public ReservaVO(int id, LocalDate fechaEntrada, LocalDate fechaSalida, int numHabitaciones, tipo_hab tipoHabitacion, com.example.reservahotel.Modelo.repository.impl.regimen regimen, boolean fumador, String dniCliente) {
         this.id = id;
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
@@ -56,19 +57,19 @@ public class ReservaVO {
         this.numHabitaciones = numHabitaciones;
     }
 
-    public String getTipoHabitacion() {
+    public tipo_hab getTipoHabitacion() {
         return tipoHabitacion;
     }
 
-    public void setTipoHabitacion(String tipoHabitacion) {
+    public void setTipoHabitacion(tipo_hab tipoHabitacion) {
         this.tipoHabitacion = tipoHabitacion;
     }
 
-    public String getRegimen() {
+    public com.example.reservahotel.Modelo.repository.impl.regimen getRegimen() {
         return regimen;
     }
 
-    public void setRegimen(String regimen) {
+    public void setRegimen(com.example.reservahotel.Modelo.repository.impl.regimen regimen) {
         this.regimen = regimen;
     }
 
@@ -95,8 +96,8 @@ public class ReservaVO {
                 ", fechaEntrada=" + fechaEntrada +
                 ", fechaSalida=" + fechaSalida +
                 ", numHabitaciones=" + numHabitaciones +
-                ", tipoHabitacion='" + tipoHabitacion + '\'' +
-                ", regimen='" + regimen + '\'' +
+                ", tipoHabitacion=" + tipoHabitacion +
+                ", regimen=" + regimen +
                 ", fumador=" + fumador +
                 ", dniCliente='" + dniCliente + '\'' +
                 '}';
