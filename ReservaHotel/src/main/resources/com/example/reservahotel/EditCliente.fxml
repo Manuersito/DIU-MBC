@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reservahotel.Controller.EditClienteController">
    <children>
       <GridPane layoutX="14.0" layoutY="14.0" prefHeight="320.0" prefWidth="569.0">
         <columnConstraints>
@@ -43,7 +43,7 @@
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" />
          </children>
       </GridPane>
-      <Button fx:id="clienteAceptar" layoutX="431.0" layoutY="357.0" mnemonicParsing="false" text="Aceptar" />
-      <Button fx:id="clienteCancelar" layoutX="511.0" layoutY="357.0" mnemonicParsing="false" text="Cancelar" />
+      <Button fx:id="clienteAceptar" layoutX="431.0" layoutY="357.0" mnemonicParsing="false" onAction="#clienteAceptar" text="Aceptar" />
+      <Button fx:id="clienteCancelar" layoutX="511.0" layoutY="357.0" mnemonicParsing="false" onAction="#clienteCancelar" text="Cancelar" />
    </children>
 </Pane>
