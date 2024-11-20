@@ -3,6 +3,8 @@ package com.example.reservahotel.Util;
 import com.example.reservahotel.Cliente;
 
 import com.example.reservahotel.Modelo.ReservaVO;
+import com.example.reservahotel.Modelo.repository.impl.regimen;
+import com.example.reservahotel.Modelo.repository.impl.tipo_hab;
 import com.example.reservahotel.Reserva;
 
 import java.time.LocalDate;
@@ -33,21 +35,17 @@ public class ReservaUtil {
      * @param reserva El objeto Reserva a convertir.
      * @return Un objeto ReservaVO.
      */
-    public  ReservaVO fromReservaToReservaVO(Reserva reserva) {
-        if (reserva == null) {
-            return null;
-        }
+    public ReservaVO fromReservaToReservaVO(Reserva reserva) {
+        int id = reserva.getId();
+        LocalDate fechaLlegada = LocalDate.parse(reserva.getFechaEntrada());
+        LocalDate fechaSalida = LocalDate.parse(reserva.getFechaSalida());
+        tipo_hab tipoHabitacionEnum = tipo_hab.valueOf(reserva.getTipoHabitacion().toUpperCase().replace(" ", "_"));
+        int nHabitaciones = reserva.getNumHabitaciones();
+        boolean fumador = reserva.isFumador();
+        regimen regimenEnum = regimen.valueOf(reserva.getRegimen().toUpperCase());
+        String dniCliente = reserva.getDniCliente();
 
-        return new ReservaVO(
-                reserva.getId(),
-                LocalDate.parse(reserva.getFechaEntrada()),  // Convierte String a LocalDate
-                LocalDate.parse(reserva.getFechaSalida()),   // Convierte String a LocalDate
-                reserva.getNumHabitaciones(),
-                reserva.getTipoHabitacion(),
-                reserva.getRegimen(),
-                reserva.isFumador(),
-                reserva.getDniCliente()
-        );
+        return new ReservaVO(id, fechaLlegada, fechaSalida, nHabitaciones, tipoHabitacionEnum, regimenEnum, fumador, dniCliente);
     }
 
     public  ArrayList<Reserva> fromReservaVOListToReservaList(ArrayList<ReservaVO> reservaVOList) {

@@ -4,9 +4,12 @@ import com.example.reservahotel.Modelo.ReservaVO;
 import java.util.ArrayList;
 
 public interface ReservaRepository {
-    ArrayList<ReservaVO> obtenerListaReservas() throws ExcepcionReserva;
-    ArrayList<ReservaVO> obtenerReservaCliente() throws ExcepcionReserva;
 
+
+
+
+    // Método modificado para obtener las reservas por DNI del cliente
+    ArrayList<ReservaVO> obtenerReservaCliente(String dni_cliente) throws ExcepcionReserva;
 
     void addReserva(ReservaVO reserva) throws ExcepcionReserva;
 

@@ -4,6 +4,7 @@ import com.example.reservahotel.Modelo.ModeloHotel;
 import com.example.reservahotel.Cliente;
 import com.example.reservahotel.MainApp;
 import com.example.reservahotel.Modelo.ReservaVO;
+import com.example.reservahotel.Modelo.repository.ExcepcionReserva;
 import com.example.reservahotel.Reserva;
 import com.example.reservahotel.Util.ReservaUtil;
 import eu.hansolo.tilesfx.tools.DoubleExponentialSmoothingForLinearSeries;
@@ -87,6 +88,7 @@ public class ClientOverview {
 
         reservationTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showReservaDetails(newValue));
+        System.out.println("inizialice overview controller");
 
     }
 
@@ -139,7 +141,6 @@ public class ClientOverview {
 
     public void showReservaDetails(Reserva reserva) {
         if (reserva != null) {
-            // Aquí puedes obtener los detalles de la reserva correctamente
             entradaLabel.setText(reserva.getFechaEntrada());
             salidaLabel.setText(reserva.getFechaSalida());
             numLabel.setText(String.valueOf(reserva.getNumHabitaciones()));
@@ -147,12 +148,7 @@ public class ClientOverview {
             regimenLabel.setText(reserva.getRegimen());
             fumadorLabel.setText(String.valueOf(reserva.isFumador()));
 
-            reservaObservableList.clear();
 
-            // Aquí parece que obtienes las reservas asociadas al cliente
-            reservas = reservaUtil.fromReservaVOListToReservaList(modelo.getReservas(reserva.getDniCliente()));
-            reservaObservableList.addAll(reservas);
-            reservationTable.setItems(reservaObservableList);
         } else {
             // Limpiar los campos si no hay reserva seleccionada
             entradaLabel.setText("");

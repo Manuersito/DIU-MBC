@@ -69,7 +69,7 @@ public class ModeloHotel {
     }
 
 
-    public ArrayList<Reserva> mostrarReservas(String dni_cliente) {
+    public ArrayList<Reserva> mostrarReservas(String dni_cliente) throws ExcepcionReserva{
         try {
             reservasVO = reservaRepository.obtenerReservaCliente(dni_cliente);
             reservas = reservaUtil.fromReservaVOListToReservaList(reservasVO);
