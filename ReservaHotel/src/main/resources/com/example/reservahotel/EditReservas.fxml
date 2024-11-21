@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reservahotel.Controller.EditReservaController">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="DNI Cliente:" />
+      <Label fx:id="DNICLIENTE" layoutX="94.0" layoutY="14.0" prefHeight="19.0" prefWidth="97.0" />
+      <Label layoutX="46.0" layoutY="49.0" text="Fecha Entrada" />
+      <Label layoutX="289.0" layoutY="49.0" text="Fecha Salida" />
+      <Label layoutX="15.0" layoutY="167.0" text="Numero de Habitaciones: " />
+      <Label layoutX="254.0" layoutY="167.0" text="Tipo de Habitacion: " />
+      <Label layoutX="15.0" layoutY="234.0" text="Regimen: " />
+      <CheckBox layoutX="15.0" layoutY="282.0" mnemonicParsing="false" text="Fumador" />
+      <DatePicker layoutX="15.0" layoutY="83.0" prefHeight="29.0" prefWidth="159.0" />
+      <DatePicker layoutX="254.0" layoutY="83.0" prefHeight="29.0" prefWidth="159.0" />
+      <ChoiceBox layoutX="185.0" layoutY="162.0" prefHeight="29.0" prefWidth="50.0" />
+      <ChoiceBox layoutX="385.0" layoutY="162.0" prefWidth="159.0" />
+      <ChoiceBox layoutX="89.0" layoutY="229.0" prefWidth="150.0" />
+      <Button fx:id="reservaAceptar" layoutX="365.0" layoutY="277.0" mnemonicParsing="false" onAction="#reservaAceptar" text="Aceptar" />
+      <Button fx:id="reservaCancelar" layoutX="484.0" layoutY="277.0" mnemonicParsing="false" onAction="#reservaCancelar" text="Cancelar" />
+   </children>
+</Pane>
