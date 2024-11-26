@@ -1,11 +1,16 @@
 package com.example.reservahotel.Controller;
 
+import com.example.reservahotel.Modelo.ClienteVO;
 import com.example.reservahotel.Modelo.ModeloHotel;
 import com.example.reservahotel.Cliente;
 import com.example.reservahotel.MainApp;
 import com.example.reservahotel.Modelo.ReservaVO;
+import com.example.reservahotel.Modelo.repository.ClientRepository;
+import com.example.reservahotel.Modelo.repository.ExcepcionCliente;
 import com.example.reservahotel.Modelo.repository.ExcepcionReserva;
+import com.example.reservahotel.Modelo.repository.impl.ClientRepositoryImpl;
 import com.example.reservahotel.Reserva;
+import com.example.reservahotel.Util.ClientUtil;
 import com.example.reservahotel.Util.ReservaUtil;
 import eu.hansolo.tilesfx.tools.DoubleExponentialSmoothingForLinearSeries;
 import javafx.collections.FXCollections;
@@ -18,6 +23,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ClientOverview {
     ObservableList<Reserva> reservaObservableList = FXCollections.observableArrayList();
@@ -64,7 +70,7 @@ public class ClientOverview {
     private ModeloHotel modelo;
     private MainApp mainApp;
     private ReservaUtil reservaUtil = new ReservaUtil();
-
+    private ClientRepositoryImpl clientRepository = new ClientRepositoryImpl();
     @FXML
     private void initialize() {
         // Configura las columnas de la tabla con las propiedades correctas
@@ -120,6 +126,8 @@ public class ClientOverview {
             provinciaLabel.setText("");
         }
     }
+
+
     public void loadReservasData(String dniCliente) {
         try {
             if (dniCliente != null && !dniCliente.isEmpty()) {
@@ -136,6 +144,16 @@ public class ClientOverview {
             }
         } catch (Exception e) {
             mostrarAlertaError("Error al cargar", "Error: " + e.getMessage());
+        }
+    }
+
+    private void loadPersonData() {
+        try {
+            ArrayList<ClienteVO> personVOList = clientRepository.ObtenerListaPersonas();
+            ArrayList<Cliente> personList = ClientUtil.getClientes(personVOList);
+            clientTable.getItems().setAll(personList); // Actualiza la tabla con nuevos datos
+        } catch (ExcepcionCliente e) {
+            mostrarAlertaError("Error al cargar la lista de personas", e.getMessage());
         }
     }
 
@@ -193,6 +211,61 @@ public class ClientOverview {
                 mostrarAlertaError("Error al eliminar", e.getMessage());
             }
         } else {
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("No Selection");
+            alert.setHeaderText("No Person Selected");
+            alert.setContentText("Please select a person in the table.");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    private void addClientButton() {
+        Cliente tempCliente = new Cliente();
+        boolean okClicked = mainApp.showPersonEditDialogNew(tempCliente);
+        if (okClicked) {
+            try {
+                List<Cliente> personsList = new ArrayList<>();
+                personsList.add(tempCliente);  // Cambiado a tempPerson
+                ClienteVO personVO = ClientUtil.getClientesVO((ArrayList<Cliente>) personsList).get(0);
+                modelo.nuevoPerson(personVO);
+                clientTable.getItems().add(tempCliente);
+                loadPersonData();
+
+            } catch (ExcepcionCliente e) {
+                mostrarAlertaError("Error al guardar la persona", e.getMessage());
+            }
+        }
+    }
+
+    @FXML
+    private void editClientButton() {
+        Cliente selectedPerson = clientTable.getSelectionModel().getSelectedItem();
+        if (selectedPerson != null) {
+            // Abrir el diálogo de edición
+            boolean okClicked = mainApp.showPersonEditDialogEdit(selectedPerson);
+
+            if (okClicked) {
+                try {
+                    // Convertir la persona seleccionada a PersonVO
+                    List<Cliente> personsList = new ArrayList<>();
+                    personsList.add(selectedPerson);
+
+
+                    ClienteVO personVO = ClientUtil.clienteToClienteVO(selectedPerson);
+                    //personUtil.getPersonasVO((ArrayList<Person>) personsList).get(0);
+                    // Llamar al método para actualizar la persona en la base de datos
+                    modelo.actualizarPerson(personVO);
+                    loadPersonData();
+
+                    // Mostrar detalles actualizados en la vista
+                    showPersonDetails(selectedPerson);
+                } catch (ExcepcionCliente e) {
+                    mostrarAlertaError("Error al editar la persona", e.getMessage());
+                }
+            }
+        } else {
+            // Mostrar una alerta si no hay ninguna persona seleccionada
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("No Selection");
             alert.setHeaderText("No Person Selected");

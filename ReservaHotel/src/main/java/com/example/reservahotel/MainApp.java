@@ -1,6 +1,7 @@
 package com.example.reservahotel;
 
 import com.example.reservahotel.Controller.ClientOverview;
+import com.example.reservahotel.Controller.EditClienteController;
 import com.example.reservahotel.Modelo.ModeloHotel;
 import com.example.reservahotel.Modelo.repository.ExcepcionCliente;
 import com.example.reservahotel.Modelo.repository.impl.ClientRepositoryImpl;
@@ -12,6 +13,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -81,6 +84,66 @@ public class MainApp extends Application {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public boolean showPersonEditDialogEdit(Cliente cliente) {
+        try {
+            // Cargar el archivo FXML y crear una nueva ventana
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("EditCliente.fxml"));
+            Pane page = (Pane) loader.load();
+
+            // Crear la ventana del diálogo
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Edit Person");
+            dialogStage.initModality(Modality.NONE);  // No bloquear la ventana principal
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Pasar el cliente al controlador del diálogo
+            EditClienteController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setClienteEdit(cliente);
+
+            // Mostrar el diálogo y esperar hasta que se cierre
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();  // Devolver si el usuario hizo clic en OK
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean showPersonEditDialogNew(Cliente cliente) {
+        try {
+            // Cargar el archivo FXML y crear una nueva ventana
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("EditCliente.fxml"));
+            Pane page = (Pane) loader.load();
+
+            // Crear la ventana del diálogo
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Edit Person");
+            dialogStage.initModality(Modality.NONE);  // No bloquear la ventana principal
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Pasar el cliente al controlador del diálogo
+            EditClienteController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setClienteNew(cliente);
+
+            // Mostrar el diálogo y esperar hasta que se cierre
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();  // Devolver si el usuario hizo clic en OK
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 

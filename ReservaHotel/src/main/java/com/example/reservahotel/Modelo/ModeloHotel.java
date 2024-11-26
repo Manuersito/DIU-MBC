@@ -56,8 +56,8 @@ public class ModeloHotel {
         clientRepository.addPersona(clienteVO);
     }
 
-    public void actualizarPerson(ClienteVO personVO) throws ExcepcionCliente {
-        clientRepository.editPersona(personVO);
+    public void actualizarPerson(ClienteVO clienteVO) throws ExcepcionCliente {
+        clientRepository.editPersona(clienteVO);
     }
 
     public void eliminarPerson(String personId) throws ExcepcionCliente {
