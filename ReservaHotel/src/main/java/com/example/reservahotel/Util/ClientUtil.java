@@ -6,7 +6,6 @@
     import java.util.ArrayList;
 
     public class ClientUtil {
-
         public static ArrayList<Cliente> getClientes(ArrayList<ClienteVO> clienteVOList) {
             ArrayList<Cliente> clientes = new ArrayList<>();
             for (ClienteVO clienteVO : clienteVOList) {

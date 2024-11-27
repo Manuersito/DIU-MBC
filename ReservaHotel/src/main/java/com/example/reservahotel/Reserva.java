@@ -1,19 +1,14 @@
 package com.example.reservahotel;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 import java.time.LocalDate;
 
 public class Reserva{
 
     private final IntegerProperty id;
-    private final StringProperty fechaEntrada;
-    private final StringProperty fechaSalida;
+    private final SimpleObjectProperty <LocalDate> fechaEntrada;
+    private final SimpleObjectProperty <LocalDate> fechaSalida;
     private final IntegerProperty numHabitaciones;
     private final StringProperty tipoHabitacion;
     private final StringProperty regimen;
@@ -39,11 +34,11 @@ public class Reserva{
      * @param fumador
      * @param dniCliente
      */
-    public Reserva(int id, String fechaEntrada, String fechaSalida, int numHabitaciones,
+    public Reserva(int id, LocalDate fechaEntrada, LocalDate fechaSalida, int numHabitaciones,
                    String tipoHabitacion, String regimen, boolean fumador, String dniCliente) {
         this.id = new SimpleIntegerProperty(id);
-        this.fechaEntrada = new SimpleStringProperty(fechaEntrada);
-        this.fechaSalida = new SimpleStringProperty(fechaSalida);
+        this.fechaEntrada = new SimpleObjectProperty<LocalDate>(fechaEntrada);
+        this.fechaSalida = new SimpleObjectProperty<LocalDate>(fechaSalida);
         this.numHabitaciones = new SimpleIntegerProperty(numHabitaciones);
         this.tipoHabitacion = new SimpleStringProperty(tipoHabitacion);
         this.regimen = new SimpleStringProperty(regimen);
@@ -63,31 +58,31 @@ public class Reserva{
         return id;
     }
 
-    public String getFechaEntrada() {
+    public LocalDate getFechaEntrada() {
         return fechaEntrada.get();
     }
 
-    public void setFechaEntrada(String fechaEntrada) {
+    public void setFechaEntrada(LocalDate fechaEntrada) {
         this.fechaEntrada.set(fechaEntrada);
     }
 
-    public StringProperty fechaEntradaProperty() {
+    public SimpleObjectProperty<LocalDate> fechaEntradaProperty() {
         return fechaEntrada;
     }
 
-    public String getFechaSalida() {
+    public LocalDate getFechaSalida() {
         return fechaSalida.get();
     }
 
-    public void setFechaSalida(String fechaSalida) {
+    public void setFechaSalida(LocalDate fechaSalida) {
         this.fechaSalida.set(fechaSalida);
     }
 
-    public StringProperty fechaSalidaProperty() {
+    public SimpleObjectProperty<LocalDate> fechaSalidaProperty() {
         return fechaSalida;
     }
 
-    public int getNumHabitaciones() {
+    public Integer getNumHabitaciones() {
         return numHabitaciones.get();
     }
 

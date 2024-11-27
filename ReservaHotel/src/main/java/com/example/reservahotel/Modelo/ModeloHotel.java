@@ -68,6 +68,14 @@ public class ModeloHotel {
         reservaRepository.deleteReserva(reservaId);
     }
 
+    public void nuevaReserva(ReservaVO reservaVO) throws ExcepcionCliente {
+        reservaRepository.addReserva(reservaVO);
+    }
+
+    public void editarReserva(ReservaVO reservaVO) throws ExcepcionCliente {
+        reservaRepository.editReserva(reservaVO);
+    }
+
 
     public ArrayList<Reserva> mostrarReservas(String dni_cliente) throws ExcepcionReserva{
         try {

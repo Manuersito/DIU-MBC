@@ -2,6 +2,7 @@ package com.example.reservahotel;
 
 import com.example.reservahotel.Controller.ClientOverview;
 import com.example.reservahotel.Controller.EditClienteController;
+import com.example.reservahotel.Controller.EditReservaController;
 import com.example.reservahotel.Modelo.ModeloHotel;
 import com.example.reservahotel.Modelo.repository.ExcepcionCliente;
 import com.example.reservahotel.Modelo.repository.impl.ClientRepositoryImpl;
@@ -136,6 +137,36 @@ public class MainApp extends Application {
             EditClienteController controller = loader.getController();
             controller.setDialogStage(dialogStage);
             controller.setClienteNew(cliente);
+
+            // Mostrar el diálogo y esperar hasta que se cierre
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();  // Devolver si el usuario hizo clic en OK
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean showReservationEditDialogNew(Reserva reserva) {
+        try {
+            // Cargar el archivo FXML y crear una nueva ventana
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("EditReserva.fxml"));
+            Pane page = (Pane) loader.load();
+
+            // Crear la ventana del diálogo
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Edit Person");
+            dialogStage.initModality(Modality.NONE);  // No bloquear la ventana principal
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Pasar el cliente al controlador del diálogo
+            EditReservaController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setReservaNew(reserva);
 
             // Mostrar el diálogo y esperar hasta que se cierre
             dialogStage.showAndWait();

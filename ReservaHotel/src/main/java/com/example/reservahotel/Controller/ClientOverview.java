@@ -76,7 +76,7 @@ public class ClientOverview {
         // Configura las columnas de la tabla con las propiedades correctas
         firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
         lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
-        reservationColumn.setCellValueFactory(cellData -> cellData.getValue().fechaEntradaProperty());
+        reservationColumn.setCellValueFactory(cellData -> cellData.getValue().fechaEntradaProperty().asString());
         // Limpiar los detalles del cliente
         showPersonDetails(null);
 
@@ -159,8 +159,8 @@ public class ClientOverview {
 
     public void showReservaDetails(Reserva reserva) {
         if (reserva != null) {
-            entradaLabel.setText(reserva.getFechaEntrada());
-            salidaLabel.setText(reserva.getFechaSalida());
+            entradaLabel.setText(String.valueOf(reserva.getFechaEntrada()));
+            salidaLabel.setText(String.valueOf(reserva.getFechaSalida()));
             numLabel.setText(String.valueOf(reserva.getNumHabitaciones()));
             tipoLabel.setText(reserva.getTipoHabitacion());
             regimenLabel.setText(reserva.getRegimen());
@@ -271,6 +271,25 @@ public class ClientOverview {
             alert.setHeaderText("No Person Selected");
             alert.setContentText("Please select a person in the table.");
             alert.showAndWait();
+        }
+    }
+
+    @FXML
+    private void addReservationButton() {
+        Reserva tempReserva = new Reserva();
+        boolean okClicked = mainApp.showReservationEditDialogNew(tempReserva);
+        if (okClicked) {
+            try {
+                List<Reserva> reservaList = new ArrayList<>();
+                reservaList.add(tempReserva);  // Cambiado a tempPerson
+                ReservaVO reservaVO = reservaUtil.getReservasVO((ArrayList<Reserva>) reservaList).get(0);
+                modelo.nuevaReserva(reservaVO);
+                reservationTable.getItems().add(tempReserva);
+                loadPersonData();
+
+            } catch (ExcepcionCliente e) {
+                mostrarAlertaError("Error al guardar la persona", e.getMessage());
+            }
         }
     }
 
