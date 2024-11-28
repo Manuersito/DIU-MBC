@@ -276,22 +276,34 @@ public class ClientOverview {
 
     @FXML
     private void addReservationButton() {
-        Reserva tempReserva = new Reserva();
-        boolean okClicked = mainApp.showReservationEditDialogNew(tempReserva);
-        if (okClicked) {
-            try {
-                List<Reserva> reservaList = new ArrayList<>();
-                reservaList.add(tempReserva);  // Cambiado a tempPerson
-                ReservaVO reservaVO = reservaUtil.getReservasVO((ArrayList<Reserva>) reservaList).get(0);
-                modelo.nuevaReserva(reservaVO);
-                reservationTable.getItems().add(tempReserva);
-                loadPersonData();
+        Cliente clienteSeleccionado = clientTable.getSelectionModel().getSelectedItem();
 
-            } catch (ExcepcionCliente e) {
-                mostrarAlertaError("Error al guardar la persona", e.getMessage());
+        if (clienteSeleccionado != null) {
+            Reserva tempReserva = new Reserva();
+
+            // Mostrar el diálogo para agregar una reserva
+            boolean okClicked = mainApp.showReservationEditDialogNew(tempReserva, clienteSeleccionado);
+
+            if (okClicked) {
+                try {
+                    // Convertir la reserva a ReservaVO para guardarla en el modelo
+                    List<Reserva> reservaList = new ArrayList<>();
+                    reservaList.add(tempReserva);
+                    ReservaVO reservaVO = reservaUtil.getReservasVO((ArrayList<Reserva>) reservaList).get(0);
+
+                    modelo.nuevaReserva(reservaVO);  // Guardar en la base de datos
+                    reservationTable.getItems().add(tempReserva);  // Añadir a la tabla
+                    loadReservasData(clienteSeleccionado.getDni());  // Actualizar la vista de reservas
+                } catch (ExcepcionReserva e) {
+                    mostrarAlertaError("Error al guardar la reserva", e.getMessage());
+                }
             }
+        } else {
+            // Mostrar una alerta si no hay cliente seleccionado
+            mostrarAlertaError("No Client Selected", "Por favor, seleccione un cliente para añadir una reserva.");
         }
     }
+
 
 
     private void mostrarAlertaError(String titulo, String mensaje) {

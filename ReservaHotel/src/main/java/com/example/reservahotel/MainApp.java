@@ -12,6 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -148,35 +149,46 @@ public class MainApp extends Application {
         }
     }
 
-    public boolean showReservationEditDialogNew(Reserva reserva) {
+    public boolean showReservationEditDialogNew(Reserva reserva, Cliente cliente) {
         try {
             // Cargar el archivo FXML y crear una nueva ventana
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("EditReserva.fxml"));
-            Pane page = (Pane) loader.load();
+            loader.setLocation(MainApp.class.getResource("EditReservas.fxml"));
+            Pane page = loader.load();
 
             // Crear la ventana del diálogo
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Edit Person");
-            dialogStage.initModality(Modality.NONE);  // No bloquear la ventana principal
+            dialogStage.setTitle("Nueva Reserva");
+            dialogStage.initModality(Modality.WINDOW_MODAL); // Bloquear interacciones con la ventana principal
             dialogStage.initOwner(primaryStage);
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
+            dialogStage.setScene(new Scene(page));
 
-            // Pasar el cliente al controlador del diálogo
+            // Configurar el controlador
             EditReservaController controller = loader.getController();
             controller.setDialogStage(dialogStage);
             controller.setReservaNew(reserva);
+            controller.setClienteSeleccionado(cliente);
 
             // Mostrar el diálogo y esperar hasta que se cierre
             dialogStage.showAndWait();
 
-            return controller.isOkClicked();  // Devolver si el usuario hizo clic en OK
+            return controller.isOkClicked(); // Devolver si el usuario hizo clic en "OK"
         } catch (IOException e) {
+            mostrarAlertaError("Error", "No se pudo cargar la ventana de edición de reservas.");
             e.printStackTrace();
             return false;
         }
     }
+
+
+    private void mostrarAlertaError(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+
 
     public ObservableList<Cliente> getPersonData() {
         return personData;
