@@ -24,34 +24,29 @@ public class ReservaRepositoryImpl implements ReservaRepository {
     // Método modificado para obtener las reservas por DNI del cliente
     @Override
     public ArrayList<ReservaVO> obtenerReservaCliente(String dni_cliente) throws ExcepcionReserva {
-        // Inicializar la lista de reservas
         ArrayList<ReservaVO> reservas = new ArrayList<>();
-
-        // Conexión a la base de datos
         try (Connection conn = this.conexion.conectarBD()) {
 
-            // Crear el Statement una vez que la conexión esté establecida
-            String sentencia = "SELECT * FROM reserva WHERE Dni_Cliente = ?";
+            // Verificar la conexión
+            if (conn == null) {
+                System.out.println("Error: No se pudo conectar a la base de datos.");
+                return reservas;  // Retornar lista vacía si no se pudo conectar
+            }
 
-            // Usar PreparedStatement para evitar inyección SQL
+            String sentencia = "SELECT * FROM reserva WHERE dni_cliente = ?";
             try (PreparedStatement pstmt = conn.prepareStatement(sentencia)) {
                 pstmt.setString(1, dni_cliente);  // Establecer el DNI del cliente
 
-                // Ejecutar la consulta
                 try (ResultSet rs = pstmt.executeQuery()) {
-                    // Verificar si se encontraron resultados
                     if (!rs.next()) {
                         System.out.println("No se encontraron reservas para el cliente con DNI: " + dni_cliente);
                     } else {
-                        // Si hay resultados, vuelve al inicio del ResultSet para recorrerlo
                         rs.beforeFirst();
                         while (rs.next()) {
-                            // Leer los datos del ResultSet con el nuevo orden solicitado
                             int id = rs.getInt("Id");
                             LocalDate llegada = rs.getDate("fecha_entrada").toLocalDate();
                             LocalDate salida = rs.getDate("fecha_salida").toLocalDate();
 
-                            // Procesar tipoHabitacion y regimen con manejo de excepciones
                             tipo_hab tipoHabitacion = null;
                             if (rs.getString("tipo_habitacion") != null) {
                                 try {
@@ -75,7 +70,6 @@ public class ReservaRepositoryImpl implements ReservaRepository {
 
                             String dniCliente = rs.getString("dni_cliente");
 
-                            // Crear el objeto ReservaVO y agregarlo a la lista
                             ReservaVO reserva = new ReservaVO(id, llegada, salida, numHabitaciones, tipoHabitacion, regimen, fumador, dniCliente);
                             reservas.add(reserva);
                         }
@@ -84,7 +78,6 @@ public class ReservaRepositoryImpl implements ReservaRepository {
             }
 
         } catch (SQLException e) {
-            // Log de error para depurar
             e.printStackTrace();
             throw new ExcepcionReserva("No se ha podido realizar la operación");
         }
@@ -92,9 +85,14 @@ public class ReservaRepositoryImpl implements ReservaRepository {
         return reservas;
     }
 
+    // Método para añadir una nueva reserva
     public void addReserva(ReservaVO reserva) throws ExcepcionReserva {
         try (Connection conn = this.conexion.conectarBD()) {
-            String sentencia = "INSERT INTO reserva (Fecha_Llegada, Fecha_Salida, NHabitaciones, Tipo_Habitacion, Regimen, Fumador, Dni_Cliente) " +
+            if (conn == null) {
+                throw new ExcepcionReserva("No se pudo conectar a la base de datos");
+            }
+
+            String sentencia = "INSERT INTO reserva (fecha_entrada, fecha_salida, num_habitaciones, tipo_habitacion, regimen, fumador, dni_cliente) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement pstmt = conn.prepareStatement(sentencia)) {
                 pstmt.setDate(1, Date.valueOf(reserva.getFechaEntrada()));
@@ -104,29 +102,53 @@ public class ReservaRepositoryImpl implements ReservaRepository {
                 pstmt.setString(5, reserva.getRegimen() != null ? reserva.getRegimen().name() : null);
                 pstmt.setBoolean(6, reserva.isFumador());
                 pstmt.setString(7, reserva.getDniCliente());
-                pstmt.executeUpdate();
+
+                int rowsAffected = pstmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    System.out.println("Reserva añadida con éxito.");
+                } else {
+                    System.out.println("No se pudo añadir la reserva.");
+                }
             }
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new ExcepcionReserva("No se ha podido realizar la operación");
         }
     }
 
+    // Método para eliminar una reserva
     public void deleteReserva(int id) throws ExcepcionReserva {
         try (Connection conn = this.conexion.conectarBD()) {
+            if (conn == null) {
+                throw new ExcepcionReserva("No se pudo conectar a la base de datos");
+            }
+
             String sql = "DELETE FROM reserva WHERE id = ?";
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setInt(1, id);
-                pstmt.executeUpdate();
+
+                int rowsAffected = pstmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    System.out.println("Reserva eliminada con éxito.");
+                } else {
+                    System.out.println("No se encontró una reserva con ese ID.");
+                }
             }
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new ExcepcionReserva("No se ha podido realizar la eliminación");
         }
     }
 
+    // Método para editar una reserva
     public void editReserva(ReservaVO reserva) throws ExcepcionReserva {
         try (Connection conn = this.conexion.conectarBD()) {
-            String sql = "UPDATE reserva SET Fecha_Llegada = ?, Fecha_Salida = ?, NHabitaciones = ?, " +
-                    "Tipo_Habitacion = ?, Regimen = ?, Fumador = ?, Dni_Cliente = ? WHERE id = ?";
+            if (conn == null) {
+                throw new ExcepcionReserva("No se pudo conectar a la base de datos");
+            }
+
+            String sql = "UPDATE reserva SET fecha_entrada = ?, fecha_salida = ?, num_habitaciones = ?, " +
+                    "tipo_habitacion = ?, regimen = ?, fumador = ?, dni_cliente = ? WHERE id = ?";
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setDate(1, Date.valueOf(reserva.getFechaEntrada()));
                 pstmt.setDate(2, Date.valueOf(reserva.getFechaSalida()));
@@ -136,9 +158,16 @@ public class ReservaRepositoryImpl implements ReservaRepository {
                 pstmt.setBoolean(6, reserva.isFumador());
                 pstmt.setString(7, reserva.getDniCliente());
                 pstmt.setInt(8, reserva.getId());
-                pstmt.executeUpdate();
+
+                int rowsAffected = pstmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    System.out.println("Reserva editada con éxito.");
+                } else {
+                    System.out.println("No se encontró una reserva con ese ID para editar.");
+                }
             }
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new ExcepcionReserva("No se ha podido realizar la edición");
         }
     }

@@ -180,6 +180,38 @@ public class MainApp extends Application {
         }
     }
 
+    public boolean showReservationEditDialogEdit(Reserva reserva, Cliente cliente) {
+        try {
+            // Cargar el archivo FXML y crear una nueva ventana
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("EditReservas.fxml"));
+            Pane page = loader.load();
+
+            // Crear la ventana del diálogo
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Nueva Reserva");
+            dialogStage.initModality(Modality.WINDOW_MODAL); // Bloquear interacciones con la ventana principal
+            dialogStage.initOwner(primaryStage);
+            dialogStage.setScene(new Scene(page));
+
+            // Configurar el controlador
+            EditReservaController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setReservaEdit(reserva);
+            controller.setClienteSeleccionado(cliente);
+
+            // Mostrar el diálogo y esperar hasta que se cierre
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked(); // Devolver si el usuario hizo clic en "OK"
+        } catch (IOException e) {
+            mostrarAlertaError("Error", "No se pudo cargar la ventana de edición de reservas.");
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
 
     private void mostrarAlertaError(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

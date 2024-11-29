@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="539.0" prefWidth="988.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="539.0" prefWidth="988.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -16,6 +12,14 @@
               <MenuItem mnemonicParsing="false" text="Ocupacion" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Galeria Habitaciones">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Doble" />
+                  <MenuItem mnemonicParsing="false" text="Doble individual" />
+                  <MenuItem mnemonicParsing="false" text="Suit" />
+                  <MenuItem mnemonicParsing="false" text="Junior Suit" />
+              </items>
+            </Menu>
         </menus>
       </MenuBar>
    </top>

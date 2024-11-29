@@ -16,10 +16,7 @@ import eu.hansolo.tilesfx.tools.DoubleExponentialSmoothingForLinearSeries;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 
 import java.util.ArrayList;
@@ -40,6 +37,10 @@ public class ClientOverview {
     private TableColumn<Cliente, String> firstNameColumn;
     @FXML
     private TableColumn<Cliente, String> lastNameColumn;
+
+    @FXML
+    private TextField dniField;
+
 
     @FXML
     private Label dniLabel;
@@ -192,9 +193,9 @@ public class ClientOverview {
             }
         } else {
             Alert alert = new Alert(AlertType.WARNING);
-            alert.setTitle("No Selection");
-            alert.setHeaderText("No Person Selected");
-            alert.setContentText("Please select a person in the table.");
+            alert.setTitle("No seleccionado");
+            alert.setHeaderText("Sin persona seleccionada");
+            alert.setContentText("Por favor selecciona una persona.");
             alert.showAndWait();
         }
     }
@@ -212,9 +213,9 @@ public class ClientOverview {
             }
         } else {
             Alert alert = new Alert(AlertType.WARNING);
-            alert.setTitle("No Selection");
-            alert.setHeaderText("No Person Selected");
-            alert.setContentText("Please select a person in the table.");
+            alert.setTitle("No seleccionado");
+            alert.setHeaderText("Sin reserva seleccionada");
+            alert.setContentText("Por favor selecciona una reserva.");
             alert.showAndWait();
         }
     }
@@ -267,9 +268,9 @@ public class ClientOverview {
         } else {
             // Mostrar una alerta si no hay ninguna persona seleccionada
             Alert alert = new Alert(AlertType.WARNING);
-            alert.setTitle("No Selection");
-            alert.setHeaderText("No Person Selected");
-            alert.setContentText("Please select a person in the table.");
+            alert.setTitle("No seleccionado");
+            alert.setHeaderText("Sin persona seleccionada");
+            alert.setContentText("Por favor selecciona una persona.");
             alert.showAndWait();
         }
     }
@@ -300,16 +301,78 @@ public class ClientOverview {
             }
         } else {
             // Mostrar una alerta si no hay cliente seleccionado
-            mostrarAlertaError("No Client Selected", "Por favor, seleccione un cliente para añadir una reserva.");
+            mostrarAlertaError("Sin cliente seleccionado", "Por favor, seleccione un cliente para añadir una reserva.");
         }
     }
 
+    @FXML
+    private void editReservationButton() {
+        Reserva selectedReserva = reservationTable.getSelectionModel().getSelectedItem();
+
+        if (selectedReserva != null) {
+            // Obtener el cliente asociado a la reserva
+            Cliente clienteSeleccionado = clientTable.getSelectionModel().getSelectedItem();
+            if (clienteSeleccionado != null) {
+                // Mostrar el diálogo de edición para la reserva
+                boolean okClicked = mainApp.showReservationEditDialogEdit(selectedReserva, clienteSeleccionado);
+
+                if (okClicked) {
+                    try {
+                        // Convertir la reserva modificada a ReservaVO
+                        List<Reserva> reservaList = new ArrayList<>();
+                        reservaList.add(selectedReserva);
+                        ReservaVO reservaVO = reservaUtil.getReservasVO((ArrayList<Reserva>) reservaList).get(0);
+
+                        // Llamar al modelo para actualizar la reserva en la base de datos
+                        modelo.editarReserva(reservaVO);
+                        loadReservasData(clienteSeleccionado.getDni());  // Actualizar la vista de reservas
+
+                        // Mostrar detalles actualizados en la vista
+                        showReservaDetails(selectedReserva);
+                    } catch (ExcepcionReserva e) {
+                        mostrarAlertaError("Error al editar la reserva", e.getMessage());
+                    }
+                }
+            } else {
+                // Mostrar alerta si no hay cliente seleccionado
+                mostrarAlertaError("Sin cliente seleccionado", "Por favor, seleccione un cliente antes de editar la reserva.");
+            }
+        } else {
+            // Mostrar una alerta si no hay ninguna reserva seleccionada
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("No seleccionado");
+            alert.setHeaderText("Sin reserva seleccionada");
+            alert.setContentText("Por favor selecciona una reserva.");
+            alert.showAndWait();
+        }
+    }
+
+
+    @FXML
+    private void dniField() {
+        String dni = dniField.getText().trim();  // Obtener el DNI ingresado
+
+        if (!dni.isEmpty()) {
+            // Filtra los clientes por el DNI
+            ObservableList<Cliente> filteredList = FXCollections.observableArrayList();
+            for (Cliente cliente : mainApp.getPersonData()) {
+                if (cliente.getDni().equals(dni)) {
+                    filteredList.add(cliente);
+                    break; // Se detiene después de encontrar el primer cliente que coincida
+                }
+            }
+            clientTable.setItems(filteredList);  // Actualiza la tabla con el cliente filtrado
+        } else {
+            // Si el campo DNI está vacío, muestra todos los clientes
+            clientTable.setItems(mainApp.getPersonData());
+        }
+    }
 
 
     private void mostrarAlertaError(String titulo, String mensaje) {
         Alert alert = new Alert(AlertType.WARNING);
         alert.setTitle(titulo);
-        alert.setHeaderText("Please correct invalid fields");
+        alert.setHeaderText("Corrige los datos invalidos");
         alert.setContentText(mensaje);
         alert.showAndWait();
     }

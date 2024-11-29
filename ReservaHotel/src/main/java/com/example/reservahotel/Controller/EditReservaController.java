@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
 
 public class EditReservaController {
     @FXML
@@ -25,13 +25,14 @@ public class EditReservaController {
     @FXML
     private CheckBox fumadorBox;
 
-    private Cliente cliente = new Cliente();
+    private Cliente cliente;
     private Stage dialogStage;
     private Reserva reserva;
     private boolean okClicked = false;
-    private ModeloHotel modelo = new ModeloHotel();
+    private ModeloHotel modelo;
 
     public EditReservaController() {
+        modelo = new ModeloHotel();  // Inicializar modelo
     }
 
     @FXML
@@ -67,12 +68,13 @@ public class EditReservaController {
 
     public void setReservaNew(Reserva reserva) {
         this.reserva = reserva;
-        clienteDNI.setText(cliente.getDni());
+        // Limpiar los campos
+        clienteDNI.setText(cliente != null ? cliente.getDni() : "");
         fechaEntrada.setValue(null);
         fechaSalida.setValue(null);
-        nHabitaciones.setText(null);
-        tipoHabitacion.setText(null);
-        regimenElegir.setText(null);
+        nHabitaciones.setText("");
+        tipoHabitacion.setText("");
+        regimenElegir.setText("");
         fumadorBox.setSelected(false);
     }
 
@@ -94,7 +96,7 @@ public class EditReservaController {
     @FXML
     private void reservaAceptar() {
         if (isInputValid()) {
-
+            // Actualizamos los valores de la reserva con los campos editados
             reserva.setDniCliente(clienteDNI.getText());
             reserva.setFechaEntrada(fechaEntrada.getValue());
             reserva.setFechaSalida(fechaSalida.getValue());
@@ -111,6 +113,8 @@ public class EditReservaController {
             reserva.setRegimen(regimenElegir.getText());
             reserva.setFumador(fumadorBox.isSelected());
 
+            // Aquí mostramos un mensaje de confirmación para la edición
+            System.out.println("Reserva editada: " + reserva);
 
             okClicked = true;
             dialogStage.close();
@@ -128,6 +132,8 @@ public class EditReservaController {
         // Validar fecha de entrada
         if (fechaEntrada.getValue() == null) {
             errorMessage += "La fecha de entrada no puede estar vacía.\n";
+        } else if (fechaEntrada.getValue().isBefore(LocalDate.now())) {
+            errorMessage += "La fecha de entrada no puede ser anterior a la fecha actual.\n";
         }
 
         // Validar fecha de salida
@@ -173,9 +179,6 @@ public class EditReservaController {
             return false;
         }
     }
-
-
-
 
     private void mostrarAlertaError(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.WARNING);

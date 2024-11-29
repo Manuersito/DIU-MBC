@@ -38,12 +38,12 @@
             <Label text="  Direccion" GridPane.rowIndex="3" />
             <Label text="  Localidad" GridPane.rowIndex="4" />
             <Label text="  Provincia" GridPane.rowIndex="5" />
-            <Label fx:id="dniLabel" text="Label" GridPane.columnIndex="1" />
-            <Label fx:id="nombreLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label fx:id="apellidoLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label fx:id="direccionLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label fx:id="localidadLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label fx:id="provinciaLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label fx:id="dniLabel" prefHeight="19.0" prefWidth="131.0" text="Label" GridPane.columnIndex="1" />
+            <Label fx:id="nombreLabel" prefHeight="19.0" prefWidth="131.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="apellidoLabel" prefHeight="19.0" prefWidth="131.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="direccionLabel" prefHeight="19.0" prefWidth="128.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="localidadLabel" prefHeight="19.0" prefWidth="128.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label fx:id="provinciaLabel" prefHeight="19.0" prefWidth="132.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
       <GridPane layoutX="699.0" layoutY="63.0" prefHeight="354.0" prefWidth="289.0">
@@ -66,12 +66,12 @@
             <Label text="  Tipo Habitacion" GridPane.rowIndex="3" />
             <Label text="  Regimen" GridPane.rowIndex="4" />
             <Label text="  Fumador" GridPane.rowIndex="5" />
-            <Label fx:id="entradaLabel" prefHeight="19.0" prefWidth="42.0" text="Label" GridPane.columnIndex="1" />
-            <Label fx:id="salidaLabel" prefHeight="19.0" prefWidth="46.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label fx:id="numLabel" prefHeight="19.0" prefWidth="38.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label fx:id="tipoLabel" prefHeight="19.0" prefWidth="44.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label fx:id="regimenLabel" prefHeight="19.0" prefWidth="37.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label fx:id="fumadorLabel" prefHeight="19.0" prefWidth="46.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label fx:id="entradaLabel" prefHeight="19.0" prefWidth="139.0" text="Label" GridPane.columnIndex="1" />
+            <Label fx:id="salidaLabel" prefHeight="19.0" prefWidth="140.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="numLabel" prefHeight="19.0" prefWidth="140.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="tipoLabel" prefHeight="19.0" prefWidth="140.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="regimenLabel" prefHeight="19.0" prefWidth="141.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label fx:id="fumadorLabel" prefHeight="19.0" prefWidth="140.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
       <Label layoutX="233.0" text="Detalles Clientes">
@@ -88,8 +88,8 @@
        <Button fx:id="editClientButton" layoutX="242.0" layoutY="437.0" mnemonicParsing="false" onAction="#editClientButton" text="Editar Cliente" />
        <Button fx:id="deleteClientButton" layoutX="391.0" layoutY="437.0" mnemonicParsing="false" onAction="#deleteClientButton" text="Borrar Cliente" />
        <Button fx:id="addReservationButton" layoutX="548.0" layoutY="437.0" mnemonicParsing="false" onAction="#addReservationButton" text="Añadir Reserva" />
-       <Button fx:id="editReservationButton" layoutX="723.0" layoutY="437.0" mnemonicParsing="false" text="Editar Reserva" />
+       <Button fx:id="editReservationButton" layoutX="723.0" layoutY="437.0" mnemonicParsing="false" onAction="#editReservationButton" text="Editar Reserva" />
        <Button fx:id="deleteReservationButton" layoutX="863.0" layoutY="437.0" mnemonicParsing="false" onAction="#deleteReservationButton" text="Borrar Reserva" />
-       <TextField fx:id="dniField" layoutX="35.0" layoutY="472.0" text="DNI" />
+       <TextField fx:id="dniField" layoutX="35.0" layoutY="472.0" onAction="#dniField" promptText="DNI" />
    </children>
 </Pane>

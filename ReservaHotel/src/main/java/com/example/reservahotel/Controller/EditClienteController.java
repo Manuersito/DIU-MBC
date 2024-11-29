@@ -88,8 +88,6 @@ public class EditClienteController {
 
             okClicked = true;
 
-            // Actualiza la barra de progreso después de añadir una persona
-
             dialogStage.close();
         }
     }
@@ -104,28 +102,77 @@ public class EditClienteController {
     private boolean isInputValid() {
         String errorMessage = "";
 
+        // Validación del DNI (solo para España en este caso)
         if (dniField.getText() == null || dniField.getText().length() == 0) {
-            errorMessage += "No valid first name!\n";
+            errorMessage += "El DNI no puede estar vacío.\n";
+        } else if (!dniField.getText().matches("\\d{8}[A-Za-z]")) {
+            errorMessage += "El DNI debe tener 8 dígitos seguidos de una letra.\n";
+        } else {
+            String dni = dniField.getText();
+            String numero = dni.substring(0, 8);
+            char letra = dni.charAt(8);
+
+            if (!esDniValido(numero, letra)) {
+                errorMessage += "El DNI no es válido.\n";
+            }
+
+            // Verificar que el DNI no esté ya registrado
+            if (isDniDuplicado(dni)) {
+                errorMessage += "Este DNI ya está registrado.\n";
+            }
         }
+
+        // Validación de los otros campos
         if (nombreField.getText() == null || nombreField.getText().length() == 0) {
-            errorMessage += "No valid last name!\n";
+            errorMessage += "El nombre no puede estar vacío.\n";
         }
         if (apellidoField.getText() == null || apellidoField.getText().length() == 0) {
-            errorMessage += "No valid street!\n";
+            errorMessage += "El apellido no puede estar vacío.\n";
         }
         if (direccionField.getText() == null || direccionField.getText().length() == 0) {
-            errorMessage += "No valid city!\n";
+            errorMessage += "La dirección no puede estar vacía.\n";
+        }
+        if (localidadField.getText() == null || localidadField.getText().length() == 0) {
+            errorMessage += "La localidad no puede estar vacía.\n";
         }
         if (provinciaField.getText() == null || provinciaField.getText().length() == 0) {
-            errorMessage += "No valid postal code!\n";
+            errorMessage += "La provincia no puede estar vacía.\n";
         }
+
         if (errorMessage.length() == 0) {
             return true;
         } else {
-            mostrarAlertaError("Invalid Fields", errorMessage);
+            mostrarAlertaError("Campos inválidos", errorMessage);
             return false;
         }
     }
+
+    private boolean esDniValido(String numero, char letra) {
+        // Tabla de letras de DNI
+        String letras = "TRWAGMYFPDXBNJZSQVHLCKE";
+
+        // El número debe ser divisible por 23 para obtener la letra correcta
+        int indice = Integer.parseInt(numero) % 23;
+
+        // Compara la letra proporcionada con la letra calculada
+        return letras.charAt(indice) == Character.toUpperCase(letra);
+    }
+
+    // Método para verificar si el DNI ya está registrado
+    private boolean isDniDuplicado(String dni) {
+        // Obtener la lista de clientes (esto dependerá de tu implementación)
+        ArrayList<ClienteVO> clientes = modelo.getPersons(); // Asumiendo que getPersons devuelve la lista de clientes
+
+        // Iterar por la lista de clientes para verificar si el DNI ya existe
+        for (ClienteVO cliente : clientes) {
+            if (cliente.getDNI().equals(dni)) {
+                return true; // DNI duplicado encontrado
+            }
+        }
+        return false; // No hay duplicados
+    }
+
+
 
     private void mostrarAlertaError(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
