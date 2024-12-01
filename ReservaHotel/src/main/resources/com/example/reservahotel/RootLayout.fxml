@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="539.0" prefWidth="988.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="539.0" prefWidth="988.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reservahotel.Controller.RootLayoutController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -14,10 +15,10 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Galeria Habitaciones">
               <items>
-                <MenuItem mnemonicParsing="false" text="Doble" />
-                  <MenuItem mnemonicParsing="false" text="Doble individual" />
-                  <MenuItem mnemonicParsing="false" text="Suit" />
-                  <MenuItem mnemonicParsing="false" text="Junior Suit" />
+                <MenuItem fx:id="menuDoble" mnemonicParsing="false" onAction="#abrirCarruselDoble" text="Doble" />
+                  <MenuItem fx:id="menuDobleIndividual" mnemonicParsing="false" onAction="#abrirCarruselDobleIndividual" text="Doble individual" />
+                  <MenuItem fx:id="menuSuit" mnemonicParsing="false" onAction="#abrirCarruselSuit" text="Suite" />
+                  <MenuItem fx:id="menuJuniorSuit" mnemonicParsing="false" onAction="#abrirCarruselJuniorSuit" text="Junior Suite" />
               </items>
             </Menu>
         </menus>

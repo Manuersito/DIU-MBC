@@ -21,7 +21,6 @@ public class ReservaRepositoryImpl implements ReservaRepository {
         this.reservas = new ArrayList<>();  // Inicializamos la lista
     }
 
-    // Método modificado para obtener las reservas por DNI del cliente
     @Override
     public ArrayList<ReservaVO> obtenerReservaCliente(String dni_cliente) throws ExcepcionReserva {
         ArrayList<ReservaVO> reservas = new ArrayList<>();
@@ -171,4 +170,35 @@ public class ReservaRepositoryImpl implements ReservaRepository {
             throw new ExcepcionReserva("No se ha podido realizar la edición");
         }
     }
+
+    // Método para contar habitaciones ocupadas por tipo de habitación
+    public int countHabitacionesOcupadas(String tipoHabitacion) throws ExcepcionReserva {
+        int habitacionesOcupadas = 0;
+
+        try (Connection conn = this.conexion.conectarBD()) {
+            if (conn == null) {
+                throw new ExcepcionReserva("No se pudo conectar a la base de datos");
+            }
+
+            // Consulta para contar habitaciones ocupadas
+            String sql = "SELECT COUNT(*) AS total_ocupadas FROM reserva WHERE tipo_habitacion = ?";
+
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, tipoHabitacion); // Establecer el tipo de habitación
+
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    if (rs.next()) {
+                        habitacionesOcupadas = rs.getInt("total_ocupadas"); // Obtener el total
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new ExcepcionReserva("No se ha podido obtener el conteo de habitaciones ocupadas para el tipo: " + tipoHabitacion);
+        }
+
+        return habitacionesOcupadas;
+    }
+
+
 }

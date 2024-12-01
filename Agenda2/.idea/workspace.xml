@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="11e0c359-6879-473d-b9ee-8a305702a5ce" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../ReservaHotel/src/main/java/com/example/reservahotel/Modelo/ModeloHotel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ReservaHotel/src/main/java/com/example/reservahotel/Modelo/ModeloHotel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReservaHotel/src/main/resources/com/example/reservahotel/RootLayout.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../ReservaHotel/src/main/resources/com/example/reservahotel/RootLayout.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,8 +63,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.22855.74" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.22855.74" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
       </set>
     </attachedChunks>
   </component>
@@ -98,6 +98,7 @@
       <workItem from="1731918902680" duration="60000" />
       <workItem from="1732609744153" duration="38000" />
       <workItem from="1732609787129" duration="34000" />
+      <workItem from="1733050868801" duration="12000" />
     </task>
     <servers />
   </component>
