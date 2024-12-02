@@ -10,7 +10,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Estadisticas">
             <items>
-              <MenuItem mnemonicParsing="false" text="Ocupacion" />
+              <MenuItem fx:id="ocupacion" mnemonicParsing="false" onAction="#ocupacion" text="Ocupacion" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Galeria Habitaciones">
@@ -19,6 +19,11 @@
                   <MenuItem fx:id="menuDobleIndividual" mnemonicParsing="false" onAction="#abrirCarruselDobleIndividual" text="Doble individual" />
                   <MenuItem fx:id="menuSuit" mnemonicParsing="false" onAction="#abrirCarruselSuit" text="Suite" />
                   <MenuItem fx:id="menuJuniorSuit" mnemonicParsing="false" onAction="#abrirCarruselJuniorSuit" text="Junior Suite" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Web">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#openCalculadora" text="Calculadora" />
               </items>
             </Menu>
         </menus>

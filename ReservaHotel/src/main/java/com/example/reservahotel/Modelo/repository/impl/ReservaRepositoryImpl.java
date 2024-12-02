@@ -200,5 +200,49 @@ public class ReservaRepositoryImpl implements ReservaRepository {
         return habitacionesOcupadas;
     }
 
+    public ArrayList<ReservaVO> obtenerTodasLasReservas() throws ExcepcionReserva {
+        try {
+            Connection conn = this.conexion.conectarBD();
+            ArrayList<ReservaVO> reservas = new ArrayList<>();
+            this.stmt = conn.createStatement();
+
+            // Sentencia SQL para obtener todas las reservas
+            this.sentencia = "SELECT * FROM reserva";
+            ResultSet rs = this.stmt.executeQuery(this.sentencia);
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                LocalDate llegada = rs.getDate("fecha_entrada").toLocalDate();
+                LocalDate salida = rs.getDate("fecha_salida").toLocalDate();
+                tipo_hab tipoHabitacion = null;
+                if (rs.getString("tipo_habitacion") != null) {
+                    try {
+                        tipoHabitacion = com.example.reservahotel.Modelo.repository.impl.tipo_hab.valueOf(rs.getString("tipo_habitacion"));
+                    } catch (IllegalArgumentException e) {
+                        throw new ExcepcionReserva("Valor no válido en columna tipo_habitacion");
+                    }
+                }
+                int numHabitaciones = rs.getInt("num_habitaciones");
+                regimen regimen = null;
+                if (rs.getString("regimen") != null) {
+                    try {
+                        regimen = com.example.reservahotel.Modelo.repository.impl.regimen.valueOf(rs.getString("regimen"));
+                    } catch (IllegalArgumentException e) {
+                        throw new ExcepcionReserva("Valor no válido en columna Regimen");
+                    }
+                }
+                Boolean fumador = rs.getBoolean("fumador");
+                String dniCliente = rs.getString("Dni_Cliente");
+                ReservaVO reserva = new ReservaVO(id, llegada, salida, numHabitaciones, tipoHabitacion, regimen,fumador, dniCliente);
+                reservas.add(reserva);
+            }
+
+            this.conexion.desconectarBD(conn);
+            return reservas;
+        } catch (SQLException var6) {
+            throw new ExcepcionReserva("No se ha podido realizar la operación");
+        }
+    }
+
 
 }

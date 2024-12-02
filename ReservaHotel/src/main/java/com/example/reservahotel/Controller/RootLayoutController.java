@@ -16,7 +16,7 @@ import java.util.List;
 
 public class RootLayoutController {
 
-    private MainApp mainApp; // Evitamos crear una nueva instancia
+    private MainApp mainApp = new MainApp(); // Evitamos crear una nueva instancia
 
     private ReservaRepositoryImpl reservaRepository = new ReservaRepositoryImpl();
 
@@ -111,4 +111,16 @@ public class RootLayoutController {
             System.err.println("Error al cargar el carrusel: " + e.getMessage());
         }
     }
+
+    @FXML
+    private void ocupacion(){
+        mainApp.showOcupacion();
+    }
+
+    @FXML
+    private void openCalculadora(){
+        mainApp.showWebView("http://217.160.2.154/");
+    }
+
+
 }

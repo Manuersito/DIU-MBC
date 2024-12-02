@@ -87,6 +87,16 @@ public class ModeloHotel {
         return reservas;
     }
 
+    public ArrayList<Reserva> mostrarReservasAll() throws ExcepcionReserva{
+        try {
+            reservasVO = reservaRepository.obtenerTodasLasReservas();
+            reservas = reservaUtil.fromReservaVOListToReservaList(reservasVO);
+        } catch (ExcepcionReserva e) {
+            e.printStackTrace();
+        }
+        return reservas;
+    }
+
     public ArrayList<ReservaVO> getReservas(String dni) throws ExcepcionCliente {
         return reservaRepository.obtenerReservaCliente(dni);
     }

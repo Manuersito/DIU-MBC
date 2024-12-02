@@ -1,10 +1,9 @@
 package com.example.reservahotel;
 
-import com.example.reservahotel.Controller.ClientOverview;
-import com.example.reservahotel.Controller.EditClienteController;
-import com.example.reservahotel.Controller.EditReservaController;
+import com.example.reservahotel.Controller.*;
 import com.example.reservahotel.Modelo.ModeloHotel;
 import com.example.reservahotel.Modelo.repository.ExcepcionCliente;
+import com.example.reservahotel.Modelo.repository.ExcepcionReserva;
 import com.example.reservahotel.Modelo.repository.impl.ClientRepositoryImpl;
 import com.example.reservahotel.Modelo.repository.impl.ReservaRepositoryImpl;
 import javafx.application.Application;
@@ -14,12 +13,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainApp extends Application {
 
@@ -221,6 +222,70 @@ public class MainApp extends Application {
         alert.showAndWait();
     }
 
+    public void showOcupacion() {
+        try {
+            // Obtener todas las reservas de todos los clientes
+            ArrayList<Reserva> reservas = modeloHotel.mostrarReservasAll();
+
+            // Verificar si las reservas no están vacías
+            if (reservas == null || reservas.isEmpty()) {
+                mostrarAlertaError("No hay reservas", "No se han encontrado reservas.");
+                return;
+            }
+
+            // Cargar el FXML y mostrar la ventana de estadísticas
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("Estadisticas.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Ocupación Habitaciones");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Pasar las reservas al controlador
+            EstadisticasController controller = loader.getController();
+            controller.setReservaData(reservas);
+
+            dialogStage.show();
+
+        } catch (IOException | ExcepcionReserva e) {
+            e.printStackTrace();
+            mostrarAlertaError("Error", "Hubo un problema al cargar las estadísticas.");
+        }
+    }
+
+    public void showWebView(String url) {
+        try {
+            // Verificar si la URL es válida
+            if (url == null || url.isEmpty()) {
+                mostrarAlertaError("URL inválida", "La URL proporcionada no es válida.");
+                return;
+            }
+
+            // Cargar el FXML y mostrar la ventana del WebView
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("WebView.fxml"));
+            BorderPane page = (BorderPane) loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Navegador Web");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Pasar la URL al controlador
+            WebViewController controller = loader.getController();
+            controller.loadUrl(url);
+
+            dialogStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlertaError("Error", "Hubo un problema al cargar el navegador web.");
+        }
+    }
 
     public ObservableList<Cliente> getPersonData() {
         return personData;
