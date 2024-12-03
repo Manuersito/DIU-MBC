@@ -4,9 +4,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="539.0" prefWidth="988.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reservahotel.Controller.RootLayoutController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="1110.0" stylesheets="@../../../Estilos/estilos.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reservahotel.Controller.RootLayoutController">
    <top>
-      <MenuBar BorderPane.alignment="CENTER">
+      <MenuBar stylesheets="@../../../Estilos/estilos.css" BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="Estadisticas">
             <items>

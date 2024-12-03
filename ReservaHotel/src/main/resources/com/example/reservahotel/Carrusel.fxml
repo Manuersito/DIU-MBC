@@ -10,10 +10,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 
-<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reservahotel.Controller.CarruselDialogController">
+<VBox alignment="CENTER" spacing="10" stylesheets="@../../../Estilos/estilos.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reservahotel.Controller.CarruselDialogController">
    <children>
        <Label fx:id="tituloLabel" style="-fx-font-size: 18px;" />
-       <StackPane fx:id="carruselPane" prefHeight="300" prefWidth="400">
+       <StackPane fx:id="carruselPane" prefHeight="300" prefWidth="400" stylesheets="@../../../Estilos/estilos.css">
         <!-- Carrusel de imágenes -->
     </StackPane>
        <HBox alignment="CENTER" spacing="10">

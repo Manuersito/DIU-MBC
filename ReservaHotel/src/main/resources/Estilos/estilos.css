@@ -1,0 +1,204 @@
+/* General */
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-base: #ffffff;
+    -fx-background-color: linear-gradient(to bottom, #fdfcfb, #f7f4f1);
+    -fx-accent: #4caf93;
+    -fx-focus-color: #4caf93;
+}
+
+/* Botones */
+.button {
+    -fx-background-color: linear-gradient(to bottom, #6fc9b5, #4caf93);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0, 2, 2);
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #8ed7c7, #5cba9e);
+}
+
+.button:pressed {
+    -fx-background-color: linear-gradient(to bottom, #4caf93, #3a8c72);
+}
+
+/* TextField */
+.text-field {
+    -fx-background-color: #ffffff, #f1f0ed;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 5;
+    -fx-padding: 8;
+    -fx-border-color: #4caf93;
+    -fx-border-radius: 5;
+    -fx-border-width: 1;
+}
+
+.text-field:focused {
+    -fx-border-color: #4caf93;
+}
+
+/* ListView */
+.list-view {
+    -fx-background-color: #f8f5f3;
+    -fx-border-color: #d1cec9;
+    -fx-border-radius: 5;
+    -fx-padding: 5;
+}
+
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #3d3b39;
+}
+
+.list-cell:hover {
+    -fx-background-color: #e6f4f1;
+}
+
+.list-cell:focused {
+    -fx-background-color: #d5efe8;
+    -fx-text-fill: #4caf93;
+}
+
+/* Labels */
+.label {
+    -fx-text-fill: #3d3b39;
+    -fx-font-size: 14px;
+}
+
+/* Fondo sincronizado para TableView */
+.table-view {
+    -fx-background-color: linear-gradient(to bottom, #fdfcfb, #f7f4f1); /* Fondo igual que en .root */
+    -fx-border-color: #d1cec9;
+    -fx-border-radius: 5;
+    -fx-padding: 5;
+    -fx-table-cell-border-color: #e9e7e5;
+    -fx-focus-color: transparent;
+}
+
+/* Fondo sincronizado para TableColumn (encabezados de columna) */
+.table-column-header {
+    -fx-background-color: linear-gradient(to bottom, #fdfcfb, #f7f4f1); /* Fondo igual que en .root */
+    -fx-border-color: #d1cec9;
+    -fx-text-fill: #4caf93;
+    -fx-font-weight: bold;
+    -fx-padding: 10;
+}
+
+
+
+/* Fondo y estilos de las celdas de la tabla */
+.table-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #3d3b39;
+}
+
+/* Estilo cuando las celdas están seleccionadas */
+.table-cell:selected {
+    -fx-background-color: #d5efe8;
+    -fx-text-fill: #4caf93;
+}
+
+/* Estilo para cuando se pasa el ratón sobre toda la fila */
+.table-row-cell:hover .table-cell {
+    -fx-background-color: #eef6f3;  /* Color de fondo para la fila completa */
+    -fx-text-fill: #4caf93;  /* Asegúrate de que el color del texto sea legible */
+}
+
+/* Estilo cuando las celdas están enfocadas o al pasar el ratón */
+.table-cell:hover {
+    -fx-background-color: #eef6f3;
+    -fx-text-fill: #4caf93;
+}
+
+
+/* ProgressIndicator */
+.progress-indicator {
+    -fx-progress-color: #4caf93;
+    -fx-control-inner-background: #e9e7e5;
+    -fx-padding: 5;
+    -fx-border-radius: 50%;
+    -fx-background-radius: 50%;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0, 2, 2);
+}
+
+/* BarChart */
+.chart {
+    -fx-background-color: #ffffff;
+    -fx-padding: 10;
+    -fx-border-color: #d1cec9;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.default-color0.chart-bar {
+    -fx-bar-fill: #6fc9b5;
+}
+
+.default-color1.chart-bar {
+    -fx-bar-fill: #f7b76d;
+}
+
+.default-color2.chart-bar {
+    -fx-bar-fill: #b3d3e6;
+}
+
+.default-color3.chart-bar {
+    -fx-bar-fill: #e6a6b3;
+}
+
+.chart-bar:hover {
+    -fx-bar-fill: #4caf93;
+    -fx-opacity: 0.8;
+}
+
+.axis-label {
+    -fx-text-fill: #3d3b39;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.chart-legend {
+    -fx-background-color: #f9f7f5;
+    -fx-border-color: #d1cec9;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-padding: 5;
+}
+
+.chart-legend-item {
+    -fx-text-fill: #3d3b39;
+    -fx-font-size: 12px;
+}
+
+/* Estilo para imágenes */
+.image-view {
+    -fx-preserve-ratio: true;
+    -fx-fit-height: 150px; /* Ajusta el tamaño según lo que necesites */
+    -fx-fit-width: 150px; /* Ajusta el tamaño según lo que necesites */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0, 2, 2);
+}
+
+/* Sincronización de fondo en TableView y TableColumn */
+
+/* Fondo sincronizado para TableView */
+.table-view {
+    -fx-background-color: linear-gradient(to bottom, #fdfcfb, #f7f4f1); /* Fondo igual que en .root */
+    -fx-border-color: #d1cec9;
+    -fx-border-radius: 5;
+    -fx-padding: 5;
+    -fx-table-cell-border-color: #e9e7e5;
+    -fx-focus-color: transparent;
+}
+
+/* Fondo sincronizado para TableColumn (encabezados de columna) */
+.table-column-header {
+    -fx-background-color: linear-gradient(to bottom, #fdfcfb, #f7f4f1); /* Fondo igual que en .root */
+    -fx-border-color: #d1cec9;
+    -fx-text-fill: #4caf93;
+    -fx-font-weight: bold;
+    -fx-padding: 10;
+}

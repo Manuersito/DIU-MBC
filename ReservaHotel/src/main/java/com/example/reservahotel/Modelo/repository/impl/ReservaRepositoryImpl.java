@@ -171,7 +171,7 @@ public class ReservaRepositoryImpl implements ReservaRepository {
         }
     }
 
-    // Método para contar habitaciones ocupadas por tipo de habitación
+    // Método para contar habitaciones ocupadas por tipo de habitación en el mes actual, considerando entrada y salida
     public int countHabitacionesOcupadas(String tipoHabitacion) throws ExcepcionReserva {
         int habitacionesOcupadas = 0;
 
@@ -180,8 +180,12 @@ public class ReservaRepositoryImpl implements ReservaRepository {
                 throw new ExcepcionReserva("No se pudo conectar a la base de datos");
             }
 
-            // Consulta para contar habitaciones ocupadas
-            String sql = "SELECT COUNT(*) AS total_ocupadas FROM reserva WHERE tipo_habitacion = ?";
+            // Consulta para contar habitaciones ocupadas considerando tanto la fecha de entrada como de salida en el mes actual
+            String sql = "SELECT COUNT(*) AS total_ocupadas " +
+                    "FROM reserva " +
+                    "WHERE tipo_habitacion = ? " +
+                    "AND ( (MONTH(fecha_entrada) = MONTH(CURRENT_DATE()) AND YEAR(fecha_entrada) = YEAR(CURRENT_DATE())) " +
+                    "OR (MONTH(fecha_salida) = MONTH(CURRENT_DATE()) AND YEAR(fecha_salida) = YEAR(CURRENT_DATE())) )";
 
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setString(1, tipoHabitacion); // Establecer el tipo de habitación
@@ -200,49 +204,58 @@ public class ReservaRepositoryImpl implements ReservaRepository {
         return habitacionesOcupadas;
     }
 
-    public ArrayList<ReservaVO> obtenerTodasLasReservas() throws ExcepcionReserva {
-        try {
-            Connection conn = this.conexion.conectarBD();
-            ArrayList<ReservaVO> reservas = new ArrayList<>();
-            this.stmt = conn.createStatement();
 
-            // Sentencia SQL para obtener todas las reservas
-            this.sentencia = "SELECT * FROM reserva";
-            ResultSet rs = this.stmt.executeQuery(this.sentencia);
+    public ArrayList<ReservaVO> obtenerTodasLasReservas() throws ExcepcionReserva {
+        ArrayList<ReservaVO> reservas = new ArrayList<>();
+        try (Connection conn = this.conexion.conectarBD();
+             Statement stmt = conn.createStatement()) {
+
+            // Sentencia SQL para obtener todas las reservas (sin WHERE si no hay condiciones)
+            String sentencia = "SELECT * FROM reserva";
+            ResultSet rs = stmt.executeQuery(sentencia);
 
             while (rs.next()) {
                 int id = rs.getInt("id");
                 LocalDate llegada = rs.getDate("fecha_entrada").toLocalDate();
                 LocalDate salida = rs.getDate("fecha_salida").toLocalDate();
+
                 tipo_hab tipoHabitacion = null;
-                if (rs.getString("tipo_habitacion") != null) {
+                String tipoHabitacionStr = rs.getString("tipo_habitacion");
+                if (tipoHabitacionStr != null) {
                     try {
-                        tipoHabitacion = com.example.reservahotel.Modelo.repository.impl.tipo_hab.valueOf(rs.getString("tipo_habitacion"));
+                        tipoHabitacion = tipo_hab.valueOf(tipoHabitacionStr);
                     } catch (IllegalArgumentException e) {
                         throw new ExcepcionReserva("Valor no válido en columna tipo_habitacion");
                     }
                 }
+
                 int numHabitaciones = rs.getInt("num_habitaciones");
+
                 regimen regimen = null;
-                if (rs.getString("regimen") != null) {
+                String regimenStr = rs.getString("regimen");
+                if (regimenStr != null) {
                     try {
-                        regimen = com.example.reservahotel.Modelo.repository.impl.regimen.valueOf(rs.getString("regimen"));
+                        regimen = regimen.valueOf(regimenStr);
                     } catch (IllegalArgumentException e) {
                         throw new ExcepcionReserva("Valor no válido en columna Regimen");
                     }
                 }
+
                 Boolean fumador = rs.getBoolean("fumador");
-                String dniCliente = rs.getString("Dni_Cliente");
-                ReservaVO reserva = new ReservaVO(id, llegada, salida, numHabitaciones, tipoHabitacion, regimen,fumador, dniCliente);
+                String dniCliente = rs.getString("dni_cliente");
+
+                // Crear el objeto ReservaVO y agregarlo a la lista
+                ReservaVO reserva = new ReservaVO(id, llegada, salida, numHabitaciones, tipoHabitacion, regimen, fumador, dniCliente);
                 reservas.add(reserva);
             }
 
-            this.conexion.desconectarBD(conn);
-            return reservas;
         } catch (SQLException var6) {
             throw new ExcepcionReserva("No se ha podido realizar la operación");
         }
+
+        return reservas;
     }
+
 
 
 }

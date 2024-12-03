@@ -5,20 +5,20 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="988.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reservahotel.Controller.ClientOverview">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="1048.0" stylesheets="@../../../Estilos/estilos.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reservahotel.Controller.ClientOverview">
    <children>
-       <TableView fx:id="clientTable" prefHeight="416.0" prefWidth="232.0">
+       <TableView fx:id="clientTable" prefHeight="416.0" prefWidth="232.0" stylesheets="@../../../Estilos/estilos.css">
            <columns>
                <TableColumn fx:id="firstNameColumn" prefWidth="107.0" text="Nombre" />
                <TableColumn fx:id="lastNameColumn" prefWidth="124.0" text="Apellido" />
            </columns>
        </TableView>
-       <TableView fx:id="reservationTable" layoutX="506.0" prefHeight="416.0" prefWidth="193.0">
+       <TableView fx:id="reservationTable" layoutX="506.0" prefHeight="416.0" prefWidth="193.0" stylesheets="@../../../Estilos/estilos.css">
            <columns>
                <TableColumn fx:id="reservationColumn" prefWidth="192.0" text="Lista Reserva" />
            </columns>
        </TableView>
-      <GridPane layoutX="232.0" layoutY="63.0" prefHeight="354.0" prefWidth="274.0">
+      <GridPane layoutX="232.0" layoutY="63.0" prefHeight="354.0" prefWidth="274.0" stylesheets="@../../../Estilos/estilos.css">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -46,10 +46,10 @@
             <Label fx:id="provinciaLabel" prefHeight="19.0" prefWidth="132.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
-      <GridPane layoutX="699.0" layoutY="63.0" prefHeight="354.0" prefWidth="289.0">
+      <GridPane layoutX="699.0" layoutY="63.0" prefHeight="354.0" prefWidth="409.0" stylesheets="@../../../Estilos/estilos.css">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="226.0" minWidth="10.0" prefWidth="185.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="299.0" minWidth="10.0" prefWidth="278.0" />
         </columnConstraints>
         <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -69,8 +69,8 @@
             <Label fx:id="entradaLabel" prefHeight="19.0" prefWidth="139.0" text="Label" GridPane.columnIndex="1" />
             <Label fx:id="salidaLabel" prefHeight="19.0" prefWidth="140.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label fx:id="numLabel" prefHeight="19.0" prefWidth="140.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label fx:id="tipoLabel" prefHeight="19.0" prefWidth="140.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label fx:id="regimenLabel" prefHeight="19.0" prefWidth="141.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label fx:id="tipoLabel" prefHeight="8.0" prefWidth="183.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="regimenLabel" prefHeight="20.0" prefWidth="235.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label fx:id="fumadorLabel" prefHeight="19.0" prefWidth="140.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
@@ -84,12 +84,12 @@
             <Font size="33.0" />
          </font>
       </Label>
-       <Button fx:id="addClientButton" layoutX="64.0" layoutY="437.0" mnemonicParsing="false" onAction="#addClientButton" text="Añadir Cliente" />
-       <Button fx:id="editClientButton" layoutX="242.0" layoutY="437.0" mnemonicParsing="false" onAction="#editClientButton" text="Editar Cliente" />
-       <Button fx:id="deleteClientButton" layoutX="391.0" layoutY="437.0" mnemonicParsing="false" onAction="#deleteClientButton" text="Borrar Cliente" />
-       <Button fx:id="addReservationButton" layoutX="548.0" layoutY="437.0" mnemonicParsing="false" onAction="#addReservationButton" text="Añadir Reserva" />
-       <Button fx:id="editReservationButton" layoutX="723.0" layoutY="437.0" mnemonicParsing="false" onAction="#editReservationButton" text="Editar Reserva" />
-       <Button fx:id="deleteReservationButton" layoutX="863.0" layoutY="437.0" mnemonicParsing="false" onAction="#deleteReservationButton" text="Borrar Reserva" />
+       <Button fx:id="addClientButton" layoutX="50.0" layoutY="425.0" mnemonicParsing="false" onAction="#addClientButton" text="Añadir Cliente" />
+       <Button fx:id="editClientButton" layoutX="233.0" layoutY="425.0" mnemonicParsing="false" onAction="#editClientButton" text="Editar Cliente" />
+       <Button fx:id="deleteClientButton" layoutX="374.0" layoutY="425.0" mnemonicParsing="false" onAction="#deleteClientButton" text="Borrar Cliente" />
+       <Button fx:id="addReservationButton" layoutX="533.0" layoutY="425.0" mnemonicParsing="false" onAction="#addReservationButton" text="Añadir Reserva" />
+       <Button fx:id="editReservationButton" layoutX="709.0" layoutY="425.0" mnemonicParsing="false" onAction="#editReservationButton" text="Editar Reserva" />
+       <Button fx:id="deleteReservationButton" layoutX="856.0" layoutY="425.0" mnemonicParsing="false" onAction="#deleteReservationButton" text="Borrar Reserva" />
        <TextField fx:id="dniField" layoutX="35.0" layoutY="472.0" onAction="#dniField" promptText="DNI" />
    </children>
 </Pane>

@@ -170,6 +170,8 @@ public class MainApp extends Application {
             controller.setReservaNew(reserva);
             controller.setClienteSeleccionado(cliente);
 
+            controller.actualizarMensajeFumador();
+
             // Mostrar el diálogo y esperar hasta que se cierre
             dialogStage.showAndWait();
 
@@ -190,7 +192,7 @@ public class MainApp extends Application {
 
             // Crear la ventana del diálogo
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Nueva Reserva");
+            dialogStage.setTitle("Editar Reserva");
             dialogStage.initModality(Modality.WINDOW_MODAL); // Bloquear interacciones con la ventana principal
             dialogStage.initOwner(primaryStage);
             dialogStage.setScene(new Scene(page));
@@ -200,6 +202,9 @@ public class MainApp extends Application {
             controller.setDialogStage(dialogStage);
             controller.setReservaEdit(reserva);
             controller.setClienteSeleccionado(cliente);
+
+            // Asegúrate de que el mensaje se actualice correctamente
+            controller.actualizarMensajeFumador();
 
             // Mostrar el diálogo y esperar hasta que se cierre
             dialogStage.showAndWait();
@@ -211,6 +216,7 @@ public class MainApp extends Application {
             return false;
         }
     }
+
 
 
 

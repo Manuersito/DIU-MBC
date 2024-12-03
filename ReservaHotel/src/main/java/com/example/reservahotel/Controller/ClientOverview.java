@@ -165,7 +165,7 @@ public class ClientOverview {
             numLabel.setText(String.valueOf(reserva.getNumHabitaciones()));
             tipoLabel.setText(reserva.getTipoHabitacion());
             regimenLabel.setText(reserva.getRegimen());
-            fumadorLabel.setText(String.valueOf(reserva.isFumador()));
+            fumadorLabel.setText(reserva.isFumador() ? "Sí" : "No");
 
 
         } else {

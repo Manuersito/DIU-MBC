@@ -24,6 +24,9 @@ public class EditReservaController {
     private MenuButton regimenElegir;
     @FXML
     private CheckBox fumadorBox;
+    @FXML
+    private Label mensajeFumon;
+
 
     private Cliente cliente;
     private Stage dialogStage;
@@ -60,7 +63,19 @@ public class EditReservaController {
                 System.out.println("regimenElegir: " + item.getText()); // Depuración
             });
         }
+
+        // Añadir listener para el CheckBox de fumadores
+        fumadorBox.setOnAction(event -> actualizarMensajeFumador());
     }
+
+    public void actualizarMensajeFumador() {
+        if (fumadorBox.isSelected()) {
+            mensajeFumon.setText("En virtud de la ley de sanidad se informa a los clientes de que solo podrán fumar en las habitaciones reservadas para tal fin.");
+        } else {
+            mensajeFumon.setText("");  // Limpiar el mensaje si no está seleccionado
+        }
+    }
+
 
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
