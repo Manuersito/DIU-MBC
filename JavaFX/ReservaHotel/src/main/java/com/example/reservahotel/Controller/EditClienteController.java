@@ -158,15 +158,14 @@ public class EditClienteController {
         return letras.charAt(indice) == Character.toUpperCase(letra);
     }
 
-    // Método para verificar si el DNI ya está registrado
     private boolean isDniDuplicado(String dni) {
-        // Obtener la lista de clientes
-        ArrayList<ClienteVO> clientes = modelo.getPersons();
-
-        // Verificar si el cliente actual tiene el mismo DNI que el ingresado
-        if (cliente != null && cliente.getDni().equals(dni)) {
+        // Verificar si el cliente actual no es null
+        if (cliente != null && cliente.getDni() != null && cliente.getDni().equals(dni)) {
             return false; // No es duplicado si estamos editando el mismo cliente
         }
+
+        // Obtener la lista de clientes
+        ArrayList<ClienteVO> clientes = modelo.getPersons();
 
         // Verificar si el DNI ya existe en otros clientes
         for (ClienteVO cliente : clientes) {
@@ -176,6 +175,7 @@ public class EditClienteController {
         }
         return false; // No hay duplicados
     }
+
 
 
 
