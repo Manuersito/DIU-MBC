@@ -1,5 +1,5 @@
 import './App.css';
-
+import * as math from "mathjs";
 function App() {
   return (
     <div className="App">
