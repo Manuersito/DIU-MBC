@@ -1,47 +1,52 @@
-import './App.css';
+import React, { useState } from "react";
 import * as math from "mathjs";
-function App() {
-  return (
-    <div className="App">
-      <div className="calculator">
-        {/* Pantalla de la calculadora */}
-        <div className="display">0</div>
+import Calculadora from "./Calculadora";
+import 'bootstrap/dist/css/bootstrap.css';
+import "./App.css";
 
-        {/* Botones de la calculadora */}
-        <table className="calculator-grid">
-          <tbody>
-            <tr>
-              <td><button>AC</button></td>
-              <td><button>+/-</button></td>
-              <td><button>%</button></td>
-              <td className="operator"><button>÷</button></td>
-            </tr>
-            <tr>
-              <td><button>7</button></td>
-              <td><button>8</button></td>
-              <td><button>9</button></td>
-              <td className="operator"><button>×</button></td>
-            </tr>
-            <tr>
-              <td><button>4</button></td>
-              <td><button>5</button></td>
-              <td><button>6</button></td>
-              <td className="operator"><button>-</button></td>
-            </tr>
-            <tr>
-              <td><button>1</button></td>
-              <td><button>2</button></td>
-              <td><button>3</button></td>
-              <td className="operator"><button>+</button></td>
-            </tr>
-            <tr>
-              <td colSpan="2"><button>0</button></td>
-              <td><button>.</button></td>
-              <td className="operator"><button>=</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+function App() {
+  const [displayValue, setDisplayValue] = useState(""); // Almacena la expresión
+
+  // Función para manejar los clics en los botones
+  const handleInput = (value) => {
+    setDisplayValue((prev) => prev + value); // Añade el valor a la expresión
+  };
+
+  // Función para calcular el resultado con mathjs
+  const handleCalculate = () => {
+    try {
+      const result = math.evaluate(displayValue); // Evalúa la expresión completa
+      setDisplayValue(String(result)); // Muestra el resultado
+    } catch (error) {
+      setDisplayValue("Error"); // Manejo de errores
+    }
+  };
+
+  // Función para borrar la pantalla
+  const handleClear = () => {
+    setDisplayValue(""); // Reinicia la expresión
+  };
+
+  // Funcion cambiar signo
+  const handleSignChange = () => {
+    if (displayValue.charAt(0) === "-") {
+      setDisplayValue(displayValue.slice(1)); // Elimina el signo negativo
+    } else {
+      setDisplayValue("-" + displayValue); // Agrega el signo negativo
+    }
+  };
+
+  return (
+    <div className="calculator container-fluid p-3">
+      {/* Pantalla de la calculadora */}
+      <div className="display w-100 mb-3 p-3 text-right">{displayValue || "0"}</div>
+      {/* Pasando las funciones de la calculadora a los botones */}
+      <Calculadora
+        handleInput={handleInput}
+        handleClear={handleClear}
+        handleCalculate={handleCalculate}
+        handleSignChange={handleSignChange}
+      />
     </div>
   );
 }

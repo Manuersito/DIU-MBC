@@ -9,28 +9,22 @@ body {
   margin: 0;
 }
 
-/* App.css */
-
-/* Contenedor de la calculadora */
 .calculator {
-  max-width: 100%; /* Tamaño máximo para la calculadora */
-  margin: 0 auto; /* Centra la calculadora */
-  background-color: #f4f4f4; /* Fondo de la calculadora */
-  border-radius: 10px; /* Bordes redondeados */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  width: 300px;
+  background: #f0f0f0;
+  border-radius: 10px;
+  padding: 10px;
 }
 
-/* Pantalla de la calculadora */
 .display {
-  background-color: #222;
+  background: #a0a0a0;
   color: white;
-  font-size: 2rem;
+  font-size: 2em;
   text-align: right;
+  padding: 15px;
   border-radius: 5px;
-  padding: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
-
 
 .calculator-grid {
   width: 100%;
