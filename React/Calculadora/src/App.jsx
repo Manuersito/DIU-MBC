@@ -1,15 +1,27 @@
 import React, { useState } from "react";
 import * as math from "mathjs";
 import Calculadora from "./Calculadora";
-import 'bootstrap/dist/css/bootstrap.css';
-import "./App.css";
+
+
 
 function App() {
   const [displayValue, setDisplayValue] = useState(""); // Almacena la expresión
+  const [calculated, setCalculated] = useState(false); // Nuevo estado para saber si se presionó '='
 
   // Función para manejar los clics en los botones
   const handleInput = (value) => {
-    setDisplayValue((prev) => prev + value); // Añade el valor a la expresión
+    if (calculated && !isNaN(value)) {
+      // Si se presiona un número después de calcular, sobrescribir el valor
+      setDisplayValue(value);
+      setCalculated(false); // Permitir una nueva operación
+    } else if (calculated && isNaN(value)) {
+      // Si se presiona un operador después de calcular, continuar la operación
+      setDisplayValue(displayValue + value);
+      setCalculated(false);
+    } else {
+      // Continuar añadiendo números y operadores normalmente
+      setDisplayValue((prev) => prev + value);
+    }
   };
 
   // Función para calcular el resultado con mathjs
@@ -17,14 +29,17 @@ function App() {
     try {
       const result = math.evaluate(displayValue); // Evalúa la expresión completa
       setDisplayValue(String(result)); // Muestra el resultado
+      setCalculated(true); // Marcar que se ha calculado
     } catch (error) {
       setDisplayValue("Error"); // Manejo de errores
+      setCalculated(false); // No permitir más cálculos hasta que se cambie la expresión
     }
   };
 
   // Función para borrar la pantalla
   const handleClear = () => {
     setDisplayValue(""); // Reinicia la expresión
+    setCalculated(false); // Restablece el estado de la operación calculada
   };
 
   // Funcion cambiar signo

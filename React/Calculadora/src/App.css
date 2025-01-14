@@ -1,63 +1,64 @@
-
-
-body {
+/* Centra la calculadora en la pantalla */
+.App {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: #e0e0e0;
   margin: 0;
 }
 
-/* App.css */
-
 /* Contenedor de la calculadora */
-.calculator {
-  max-width: 100%; /* Tamaño máximo para la calculadora */
-  margin: 0 auto; /* Centra la calculadora */
-  background-color: #f4f4f4; /* Fondo de la calculadora */
+.container-fluid {
+  max-width: 400px; /* Máximo ancho de la calculadora */
+  background-color: #c1c1c1; 
   border-radius: 10px; /* Bordes redondeados */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  
 }
 
-/* Pantalla de la calculadora */
+/* Estilo para la pantalla de la calculadora */
 .display {
   background-color: #222;
-  color: white;
+  color: #ffffff;
   font-size: 2rem;
   text-align: right;
-  border-radius: 5px;
   padding: 20px;
-  margin-bottom: 20px;
+  border-radius: 5px;
+  flex-shrink: 0;
 }
 
 
-.calculator-grid {
-  width: 100%;
-  border-spacing: 5px;
-}
 
+/* Estilo para los botones */
 button {
   width: 100%;
   height: 50px;
+  font-size: 1.5rem;
   border: none;
-  font-size: 1.2em;
   border-radius: 5px;
   cursor: pointer;
+  margin: 0;
 }
 
+/* Estilo para los botones al hacer hover */
 button:hover {
-  background-color: #d0d0d0;
+  background-color: #d3bebe;
 }
 
-.operator button {
-  color: #ffff;
+/* Estilos para los botones normales */
+button:not(.operator) {
+  background-color: #ffffff; 
+  color: #333; 
+}
+
+/* Estilos para los botones con operadores */
+.operator {
   background-color: #ffa500;
+  color: #fff;
 }
 
 
-td[colspan="2"] button {
-  width: calc(100% + 5px); /* Ajuste para cubrir dos columnas */
-}
+
 
 
