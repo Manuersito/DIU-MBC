@@ -1,0 +1,36 @@
+.root{
+    margin: 0%;
+    padding: 0%;
+    display: flex;
+    justify-content: center;
+}
+body{
+    background-color: #a3ff97;
+}
+th{
+    background-color: #f2f2f2;
+    padding: 10px;
+    border: 1px solid #000;
+    
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #000;
+    background-color: #f2f2f2;
+    vertical-align: top; /* Alinea el contenido al inicio de la celda */
+    text-align: left; /* Opcional: Alinea el texto a la izquierda */
+}
+
+
+input{
+    padding: 5px;
+    border: 1px solid #000;
+    margin: 10px;
+}
+
+h1{
+    text-align: center;
+    margin: 10px;
+}
+

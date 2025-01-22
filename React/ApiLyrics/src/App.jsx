@@ -1,55 +1,58 @@
 import { useState } from "react";
 import SearchForm from "./SearchForm";
-import Table from "./tabla";  // Importamos el componente Table
-import "./App.css";
+import Table from "./tabla";
+import "./styles.css";
+
+// Función para construir la URL de la API
+const buildUrl = (band, song) => `https://api.lyrics.ovh/v1/${band}/${song}`;
+
+// Función para manejar duplicados en la lista de letras
+const duplicados = (prev, band, song, lyrics) => {
+  const exists = prev.find((item) => item.band === band && item.song === song);
+  console.log(prev);
+  return exists ? prev : [...prev, { band, song, lyrics }];
+
+};
+
+// Función para manejar errores
+const Error = (error) => {
+  alert("Ocurrió un error al buscar la letra.");
+  console.error("Error en la solicitud:", error);
+};
 
 function App() {
-  const [lyricsList, setLyricsList] = useState([]);  // Array para almacenar las letras
+  const [listaLetra, setlistaLetra] = useState([]);
 
-  // Función para buscar las letras
   const fetchLyrics = (band, song) => {
     if (!band || !song) {
       alert("Por favor, ingresa tanto el artista como la canción.");
       return;
     }
 
-    const url = `https://api.lyrics.ovh/v1/${(band)}/${(song)}`;
+    const url = buildUrl(band, song);
 
     fetch(url)
       .then((response) => {
         if (!response.ok) {
-          throw new Error(`Error al obtener la letra: ${response.status} - ${response.statusText}`);
+          throw new Error(`Error al obtener la letra: ${response.statusText}`);
         }
         return response.json();
       })
       .then((data) => {
         if (data.lyrics) {
-          // Verificamos si la letra ya existe en la lista antes de agregarla
-          const newLyrics = { band, song, lyrics: data.lyrics };
-          setLyricsList((prevLyrics) => {
-            // Comprobamos si esta letra ya está en el array (por canción y banda)
-            if (!prevLyrics.some(item => item.band === band && item.song === song)) {
-              return [...prevLyrics, newLyrics];  // Si no existe, agregamos la letra nueva
-            }
-            return prevLyrics;  // Si ya existe, no agregamos de nuevo
-          });
+          setlistaLetra((prev) => duplicados(prev, band, song, data.lyrics));
         } else {
           alert("No se encontraron letras para esta canción.");
         }
       })
-      .catch((error) => {
-        alert("Ocurrió un error al buscar la letra.");
-        console.error("Error en la solicitud:", error);
-      });
+      .catch(Error);
   };
 
   return (
     <div className="App">
-      <h1>Busca tu letra de cancion favorita</h1>
-      <SearchForm onSearch={fetchLyrics} />
-      
-      {/* Componente Table para mostrar todas las letras */}
-      <Table lyricsList={lyricsList} />
+      <h1>Busca tu letra de canción favorita</h1>
+      <SearchForm buscar={fetchLyrics} />
+      <Table listaLetra={listaLetra} />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React from "react";
+import "./styles.css";
 
-function Table({ lyricsList }) {
+function Table({ listaLetra }) {
   return (
     <table>
       <thead>
@@ -11,7 +12,7 @@ function Table({ lyricsList }) {
         </tr>
       </thead>
       <tbody>
-        {lyricsList.map((item, index) => (
+        {listaLetra.map((item, index) => (
           <tr key={index}>
             <td>{item.band}</td>  {/* Mostramos el nombre del artista */}
             <td>{item.song}</td>  {/* Mostramos el nombre de la canción */}
