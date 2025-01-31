@@ -8,4 +8,5 @@ main:
 data:
       mongodb:
         database: tutorialsservice_db
+        #host: 182.28.0.11
         port: 27017

@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 import { Component } from "react";
 import TutorialDataService from "../services/tutorial.service";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -58,7 +59,11 @@ addTutorial = async (event) => {
                     <label>Publicado:</label>
                         <input type="checkbox" name="published" placeholder="published" checked={this.state.published} 
                         onChange={this.changeInput}/>
-                        <button className="btn btn-success" onClick={this.addTutorial}>Subir</button>
+                        <Link to="/tutorials">
+                    <button className="btn btn-success" onClick={this.addTutorial}>
+                        Subir
+                    </button>
+                </Link>
                 </div>
             </div>
             
