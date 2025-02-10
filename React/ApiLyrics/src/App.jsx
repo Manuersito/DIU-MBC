@@ -41,6 +41,7 @@ function App() {
       .then((data) => {
         if (data.lyrics) {
           setlistaLetra((prev) => duplicados(prev, band, song, data.lyrics));
+          console.log(listaLetra);
         } else {
           alert("No se encontraron letras para esta canción.");
         }

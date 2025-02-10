@@ -1,12 +1,12 @@
 server:
-  port: 8080
+  port: 8098
 spring:
     application:
       name:tutorials-service
-#main:
-      #allow-bean-definition-overriding: true
+main:
+      allow-bean-definition-overriding: true
 data:
       mongodb:
-        #database: tutorialsservice_db
-        host: mongo_DB
+        database: tutorialsservice_db
+        #host: mongo_DB
         port: 27017
