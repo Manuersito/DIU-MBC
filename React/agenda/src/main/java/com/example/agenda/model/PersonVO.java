@@ -20,6 +20,7 @@ public class PersonVO {
     private String calle;
     private int codigoPostal;
     private String ciudad;
-    private LocalDate fechaNacimiento;
+    private String fechaNacimiento;
+    private String[] tutoriales;
 
 }
