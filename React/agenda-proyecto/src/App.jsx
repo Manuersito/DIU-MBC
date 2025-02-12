@@ -1,14 +1,14 @@
 import { useState } from 'react'
-import NavBarComponent from './components/NavBarComponent.jsx';
 import ContactList from './components/ContactList.jsx';
+import ContactDetails from './components/ContactDetails.jsx';
 
 export default function App() {
+  const [selectedContact, setSelectedContact] = useState(null);
 
   return (
     <>
-     <NavBarComponent />
-<ContactList />
+      <ContactList onSelectContact={setSelectedContact} />
+      {selectedContact && <ContactDetails contact={selectedContact} />}
     </>
-  )
+  );
 }
-
