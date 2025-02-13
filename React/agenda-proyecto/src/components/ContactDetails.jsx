@@ -23,10 +23,10 @@ const ContactDetails = ({ contact }) => {
     };
 
     return (
-        <Row className="mt-4">
+        <Row>
             {/* Columna para los detalles del contacto */}
-            <Col md={7} className="d-flex justify-content-center">
-                <Card className="w-100">
+            <Col md={6} className="d-flex justify-content-center">
+                <Card style={{ width: '50%' }}> {/* Ajustamos el ancho de la tarjeta */}
                     <Card.Body>
                         <Card.Title className="mb-3">Detalles del Contacto</Card.Title>
                         <ul>
@@ -42,8 +42,8 @@ const ContactDetails = ({ contact }) => {
             </Col>
 
             {/* Columna para los detalles de los tutoriales */}
-            <Col md={5} className="d-flex justify-content-center">
-                <Card className="w-100">
+            <Col md={6} className="d-flex justify-content-center">
+                <Card style={{ width: '50%' }}> {/* Ajustamos el ancho de la tarjeta */}
                     <Card.Body>
                         <Card.Title className="mb-3">Detalles de los Tutoriales</Card.Title>
                         {error ? (
@@ -52,15 +52,16 @@ const ContactDetails = ({ contact }) => {
                             <Carousel 
                                 activeIndex={activeIndex} 
                                 onSelect={handleSelect} 
-                                interval={null} // Deshabilita el cambio automático
-                                style={{ minHeight: '300px' }} // Garantiza que el carrusel tenga una altura mínima
+                                interval={null} 
+                                style={{ minHeight: '300px' }}
+                                slide={false}
                             >
                                 {tutorials.map((tutorial) => (
-                                    <Carousel.Item key={tutorial.id}>
+                                    <Carousel.Item key={tutorial.id} >
                                         <Card>
                                             <Card.Body>
-                                                <Card.Title>{tutorial.title}</Card.Title>
-                                                <Card.Text>{tutorial.description}</Card.Text>
+                                                <Card.Title className="mb-3">{tutorial.title}</Card.Title>
+                                                <Card.Text className="mb-3">{tutorial.description}</Card.Text>
                                                 <img 
                                                     src={tutorial.url} 
                                                     alt={tutorial.title} 

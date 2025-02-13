@@ -20,8 +20,8 @@ const ContactList = () => {
                 <p className="text-red-500">{error}</p>
             ) : (
                 <div className="d-flex">
-                    <div className="w-25 pr-4">
-                        <table className="w-75 border-collapse border border-gray-300 text-center">
+                    <div className="w-25 pr-3"> {/* Reducimos el ancho de la lista de contactos */}
+                        <table className="w-100 border-collapse border border-gray-300 text-center">
                             <thead>
                                 <tr className="bg-gray-200">
                                     <th className="border p-2">Nombre</th>
@@ -39,7 +39,11 @@ const ContactList = () => {
                         </table>
                     </div>
 
-                    {selectedContact && <ContactDetails contact={selectedContact} />}
+                    {selectedContact && (
+                        <div className="flex-grow-1 pl-3"> {/* Ajustamos el espacio a la izquierda */}
+                            <ContactDetails contact={selectedContact} />
+                        </div>
+                    )}
                 </div>
             )}
         </div>
