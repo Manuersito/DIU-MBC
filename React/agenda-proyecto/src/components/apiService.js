@@ -13,6 +13,16 @@ export const getContacts = async () => {
     }
 };
 
+// Agregar un nuevo contacto
+export const addContact = async (contact) => {
+    try {
+        const response = await axios.post(API_CONTACTS, contact);
+        return response.data;
+    } catch (error) {
+        throw new Error("Error al agregar el contacto");
+    }
+}
+
 // Obtener un tutorial por ID
 export const getTutorialById = async (id) => {
     try {
