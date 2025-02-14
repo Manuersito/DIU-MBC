@@ -13,13 +13,12 @@ export default function App() {
 
   return (
     <Router>
-      <NavBarComponent /> {/* La barra de navegación siempre visible */}
+      <NavBarComponent handleDelete={setSelectedContact}/> {/* La barra de navegación siempre visible */}
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<ContactList onSelectContact={setSelectedContact} />} />
         <Route path="/AddContact" element={<ContactDetails />} />
         <Route path="/EditContact" element={<ContactGestion />} />
-        <Route path="/DeleteContact" element={<ContactGestion />} />
       </Routes>
       {selectedContact && <ContactDetails contact={selectedContact} />}
     </Router>

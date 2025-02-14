@@ -22,11 +22,14 @@ const ContactDetails = ({ contact }) => {
         setActiveIndex(selectedIndex);
     };
 
+
+    
+
     return (
         <Row>
             {/* Columna para los detalles del contacto */}
             <Col md={6} className="d-flex justify-content-center">
-                <Card style={{ width: '50%' }}> {/* Ajustamos el ancho de la tarjeta */}
+                <Card style={{ width: '80%' }}> {/* Ajustamos el ancho de la tarjeta */}
                     <Card.Body>
                         <Card.Title className="mb-3">Detalles del Contacto</Card.Title>
                         <ul>
@@ -43,7 +46,7 @@ const ContactDetails = ({ contact }) => {
 
             {/* Columna para los detalles de los tutoriales */}
             <Col md={6} className="d-flex justify-content-center">
-                <Card style={{ width: '50%' }}> {/* Ajustamos el ancho de la tarjeta */}
+                <Card style={{ width: '100%' }}> {/* Ajustamos el ancho de la tarjeta */}
                     <Card.Body>
                         <Card.Title className="mb-3">Detalles de los Tutoriales</Card.Title>
                         {error ? (
@@ -65,7 +68,7 @@ const ContactDetails = ({ contact }) => {
                                                 <img 
                                                     src={tutorial.url} 
                                                     alt={tutorial.title} 
-                                                    className="img-fluid mt-2" 
+                                                    className="img-fluid mt-2 display-block mx-auto" 
                                                     style={{ maxHeight: '200px', objectFit: 'cover' }} // Controla el tamaño de las imágenes
                                                 />
                                             </Card.Body>
