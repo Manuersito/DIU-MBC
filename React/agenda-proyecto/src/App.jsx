@@ -1,26 +1,45 @@
-import { useState } from 'react'
-import ContactList from './components/ContactList.jsx';
-import ContactDetails from './components/ContactDetails.jsx';
-import NavBarComponent from './components/NavBarComponent.jsx'
+import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ContactList from './components/ContactList.jsx';
+import NavBarComponent from './components/NavBarComponent.jsx';
 import Login from './components/Login.jsx';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import ContactGestion from './components/ContactGestion.jsx';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function App() {
-  const [selectedContact, setSelectedContact] = useState(null);
+    const [selectedContact, setSelectedContact] = useState(null);
+    const [refreshKey, setRefreshKey] = useState(0);
 
-  return (
-    <Router>
-      <NavBarComponent handleDelete={setSelectedContact}/> {/* La barra de navegación siempre visible */}
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<ContactList onSelectContact={setSelectedContact} />} />
-        <Route path="/AddContact" element={<ContactDetails />} />
-        <Route path="/EditContact" element={<ContactGestion />} />
-      </Routes>
-      {selectedContact && <ContactDetails contact={selectedContact} />}
-    </Router>
-  );
+    const handleRefresh = () => {
+        setRefreshKey(prev => prev + 1); // Forzar actualización de la lista de contactos
+    };
+
+    return (
+        <Router>
+            <NavBarComponent 
+                selectedContact={selectedContact} 
+                refreshContacts={handleRefresh} 
+            />
+            <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route 
+                    path="/" 
+                    element={
+                        <ContactList 
+                            key={refreshKey} 
+                            onSelectContact={setSelectedContact} 
+                        />
+                    } 
+                />
+                <Route 
+                    path="/contact-gestion" 
+                    element={
+                        <ContactGestion 
+                            onSave={handleRefresh} 
+                        />
+                    } 
+                />
+            </Routes>
+        </Router>
+    );
 }

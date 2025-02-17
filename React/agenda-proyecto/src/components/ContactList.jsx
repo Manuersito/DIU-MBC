@@ -1,51 +1,71 @@
 import { useEffect, useState } from "react";
-import ContactDetails from "./ContactDetails";
 import { getContacts } from "./apiService";
+import ContactDetails from "./ContactDetails";
 
-const ContactList = () => {
+const ContactList = ({ onSelectContact }) => {
     const [contacts, setContacts] = useState([]);
     const [error, setError] = useState(null);
     const [selectedContact, setSelectedContact] = useState(null);
 
     useEffect(() => {
-        getContacts()
-            .then(setContacts)
-            .catch(error => setError(error.message));
+        loadContacts();
     }, []);
 
-    return (
-        <div className="p-4">
-            <h2 className="text-xl font-bold mb-4">Lista de Contactos</h2>
-            {error ? (
-                <p className="text-red-500">{error}</p>
-            ) : (
-                <div className="d-flex">
-                    <div className="w-25 pr-3"> {/* Reducimos el ancho de la lista de contactos */}
-                        <table className="w-100 border-collapse border border-gray-300 text-center">
-                            <thead>
-                                <tr className="bg-gray-200">
-                                    <th className="border p-2">Nombre</th>
-                                    <th className="border p-2">Apellidos</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {contacts.map(contact => (
-                                    <tr key={contact.id} className="border cursor-pointer" onClick={() => setSelectedContact(contact)}>
-                                        <td className="border p-2">{contact.nombre}</td>
-                                        <td className="border p-2">{contact.apellidos}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+    const loadContacts = async () => {
+        try {
+            const data = await getContacts();
+            setContacts(data);
+            setError(null);
+        } catch (err) {
+            setError(err.message);
+        }
+    };
 
-                    {selectedContact && (
-                        <div className="flex-grow-1 pl-3"> {/* Ajustamos el espacio a la izquierda */}
-                            <ContactDetails contact={selectedContact} />
+    return (
+        <div className="flex flex-col h-screen">
+            <div className="p-4 flex-grow">
+                <h2 className="text-xl font-bold mb-4">Lista de Contactos</h2>
+                {error ? (
+                    <p className="text-red-500">{error}</p>
+                ) : (
+                    <div className="flex gap-4">
+                        <div className="w-1/3">
+                            <table className="w-full border-collapse border border-gray-300">
+                                <thead>
+                                    <tr className="bg-gray-200">
+                                        <th className="border p-2">Nombre</th>
+                                        <th className="border p-2">Apellidos</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {contacts.map(contact => (
+                                        <tr 
+                                            key={contact.id} 
+                                            className={`border cursor-pointer hover:bg-gray-100 ${
+                                                selectedContact?.id === contact.id ? 'bg-blue-100' : ''
+                                            }`}
+                                            onClick={() => {
+                                                setSelectedContact(contact);
+                                                onSelectContact(contact);
+                                            }}
+                                        >
+                                            <td className="border p-2">{contact.nombre}</td>
+                                            <td className="border p-2">{contact.apellidos}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
                         </div>
-                    )}
-                </div>
-            )}
+                        {selectedContact && (
+                            <div className="w-2/3">
+                                <ContactDetails contact={selectedContact} 
+                                totalContacts={contacts.length} />
+
+                            </div>
+                        )}
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

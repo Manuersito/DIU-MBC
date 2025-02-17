@@ -21,18 +21,17 @@ export const addContact = async (contact) => {
     } catch (error) {
         throw new Error("Error al agregar el contacto");
     }
-}
+};
 
-
-// Agregar un nuevo contacto
-export const editContact = async (contact) => {
+// Editar un contacto existente
+export const editContact = async (id, contact) => {
     try {
-        const response = await axios.put(`${API_TUTORIALS}/${id}`);
+        const response = await axios.put(`${API_CONTACTS}/${id}`, contact);
         return response.data;
     } catch (error) {
-        throw new Error("Error al agregar el contacto");
+        throw new Error("Error al editar el contacto");
     }
-}
+};
 
 // Eliminar un contacto
 export const deleteContact = async (id) => {
@@ -42,7 +41,7 @@ export const deleteContact = async (id) => {
     } catch (error) {
         throw new Error("Error al eliminar el contacto");
     }
-}
+};
 
 // Obtener un tutorial por ID
 export const getTutorialById = async (id) => {
