@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { getTutorialsByIds } from "./apiService";
 import { Row, Col, Card, Carousel } from "react-bootstrap";
-import {Progress} from "react";
 
-const ContactDetails = ({ contact, totalContacts }) => {
+
+const ContactDetails = ({ contact }) => {
     const [tutorials, setTutorials] = useState([]);
     const [error, setError] = useState(null);
     const [activeIndex, setActiveIndex] = useState(0); // Estado para controlar el índice activo
@@ -29,6 +29,7 @@ const ContactDetails = ({ contact, totalContacts }) => {
         <Row>
             {/* Columna para los detalles del contacto */}
             <Col md={6} className="d-flex justify-content-center">
+            
                 <Card style={{ width: '80%' }}> {/* Ajustamos el ancho de la tarjeta */}
                     <Card.Body>
                         <Card.Title className="mb-3">Detalles del Contacto</Card.Title>
@@ -80,7 +81,7 @@ const ContactDetails = ({ contact, totalContacts }) => {
                     </Card.Body>
                 </Card>
 
-                <progress value={totalContacts} max={10}></progress>
+                
             </Col>
         </Row>
     );

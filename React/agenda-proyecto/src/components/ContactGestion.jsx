@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Form, Button, Container, Alert } from 'react-bootstrap';
-import { addContact, editContact } from "./apiService";
+import { addContact, editContact, getTutorials } from "./apiService"; // Importar la función para obtener tutoriales
 
 export default function ContactGestion({ onSave }) {
     const location = useLocation();
@@ -15,14 +15,26 @@ export default function ContactGestion({ onSave }) {
         codigoPostal: '',
         ciudad: '',
         fechaNacimiento: '',
-        tutoriales: []
+        tutoriales: [] // Almacena los IDs de los tutoriales seleccionados
     });
 
-    const [newTutorial, setNewTutorial] = useState('');
+    const [tutorialesDisponibles, setTutorialesDisponibles] = useState([]); // Lista de tutoriales desde la API
     const [error, setError] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
+        // Cargar tutoriales desde la API
+        const fetchTutoriales = async () => {
+            try {
+                const tutoriales = await getTutorials(); // Llamada a la API
+                setTutorialesDisponibles(tutoriales);
+            } catch (error) {
+                setError("Error al cargar los tutoriales");
+            }
+        };
+
+        fetchTutoriales();
+
         if (mode === 'edit' && contact) {
             setFormData(contact);
         }
@@ -36,20 +48,11 @@ export default function ContactGestion({ onSave }) {
         }));
     };
 
-    const handleAddTutorial = () => {
-        if (newTutorial.trim()) {
-            setFormData(prev => ({
-                ...prev,
-                tutoriales: [...prev.tutoriales, newTutorial.trim()]
-            }));
-            setNewTutorial('');
-        }
-    };
-
-    const handleRemoveTutorial = (index) => {
+    const handleTutorialChange = (e) => {
+        const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
         setFormData(prev => ({
             ...prev,
-            tutoriales: prev.tutoriales.filter((_, i) => i !== index)
+            tutoriales: selectedOptions // Actualiza los tutoriales seleccionados
         }));
     };
 
@@ -103,9 +106,9 @@ export default function ContactGestion({ onSave }) {
                     Volver
                 </Button>
             </div>
-            
+
             {error && <Alert variant="danger" className="mb-4">{error}</Alert>}
-            
+
             <Form onSubmit={handleSubmit} className="bg-white p-4 rounded shadow-sm">
                 <div className="row">
                     <div className="col-md-6">
@@ -190,35 +193,17 @@ export default function ContactGestion({ onSave }) {
 
                 <Form.Group className="mb-4">
                     <Form.Label>Tutoriales</Form.Label>
-                    <div className="d-flex gap-2 mb-2">
-                        <Form.Control
-                            type="text"
-                            value={newTutorial}
-                            onChange={(e) => setNewTutorial(e.target.value)}
-                            placeholder="Añadir nuevo tutorial"
-                        />
-                        <Button variant="secondary" onClick={handleAddTutorial}>
-                            Añadir
-                        </Button>
-                    </div>
-                    {formData.tutoriales.length > 0 ? (
-                        <ul className="list-group">
-                            {formData.tutoriales.map((tutorial, index) => (
-                                <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
-                                    {tutorial}
-                                    <Button 
-                                        variant="danger" 
-                                        size="sm"
-                                        onClick={() => handleRemoveTutorial(index)}
-                                    >
-                                        Eliminar
-                                    </Button>
-                                </li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <p className="text-muted">No hay tutoriales añadidos</p>
-                    )}
+                    <Form.Select 
+                        multiple 
+                        value={formData.tutoriales} // Aquí se asegura que los tutoriales seleccionados se marquen
+                        onChange={handleTutorialChange}
+                    >
+                        {tutorialesDisponibles.map((tutorial) => (
+                            <option key={tutorial.id} value={String(tutorial.id)}>
+                                {tutorial.title} {/* Muestra el nombre del tutorial */}
+                            </option>
+                        ))}
+                    </Form.Select>
                 </Form.Group>
 
                 <div className="d-flex gap-2 justify-content-end">

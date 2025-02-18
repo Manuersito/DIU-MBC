@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import { getContacts } from "./apiService";
 import ContactDetails from "./ContactDetails";
+import ProgressBar from 'react-bootstrap/ProgressBar';
 
 const ContactList = ({ onSelectContact }) => {
     const [contacts, setContacts] = useState([]);
     const [error, setError] = useState(null);
     const [selectedContact, setSelectedContact] = useState(null);
+
+    // Normaliza el progreso entre 0 y 50
+    const progreso = Math.min(contacts.length, 50);
+    const progresoPorcentaje = (progreso / 50) * 100;
 
     useEffect(() => {
         loadContacts();
@@ -14,7 +19,7 @@ const ContactList = ({ onSelectContact }) => {
     const loadContacts = async () => {
         try {
             const data = await getContacts();
-            setContacts(data);
+            setContacts(data.slice(0, 50)); // Evita que haya más de 50 contactos
             setError(null);
         } catch (err) {
             setError(err.message);
@@ -29,7 +34,28 @@ const ContactList = ({ onSelectContact }) => {
                     <p className="text-red-500">{error}</p>
                 ) : (
                     <div className="flex gap-4">
+                        {/* Barra de progreso */}
                         <div className="w-1/3">
+                            <ProgressBar 
+                                variant={
+                                    progresoPorcentaje <= 50 ? "success" : 
+                                    progresoPorcentaje <= 75 ? "warning" : "danger"
+                                }
+                                animated 
+                                now={progresoPorcentaje} 
+                                label={`${progresoPorcentaje.toFixed(0)}%`} 
+                            />
+
+                            {/* Mensaje cuando se alcanza el límite */}
+                            {progresoPorcentaje >= 100 && (
+                                <p className="text-red-600 font-bold mt-2">
+                                    ⚠️ Límite alcanzado: No puedes agregar más contactos.
+                                </p>
+                            )}
+                        </div>
+
+                        {/* Tabla de contactos con scroll y ancho de 300px */}
+                        <div style={{ width: '300px', maxHeight: '300px', overflowY: 'auto' }}>
                             <table className="w-full border-collapse border border-gray-300">
                                 <thead>
                                     <tr className="bg-gray-200">
@@ -42,8 +68,8 @@ const ContactList = ({ onSelectContact }) => {
                                         <tr 
                                             key={contact.id} 
                                             className={`border cursor-pointer hover:bg-gray-100 ${
-                                                selectedContact?.id === contact.id ? 'bg-blue-100' : ''
-                                            }`}
+                                                    selectedContact?.id === contact.id ? 'bg-blue-100' : ''
+                                                }`}
                                             onClick={() => {
                                                 setSelectedContact(contact);
                                                 onSelectContact(contact);
@@ -56,11 +82,10 @@ const ContactList = ({ onSelectContact }) => {
                                 </tbody>
                             </table>
                         </div>
+                        {/* Detalles del contacto seleccionado */}
                         {selectedContact && (
-                            <div className="w-2/3">
-                                <ContactDetails contact={selectedContact} 
-                                totalContacts={contacts.length} />
-
+                            <div className="w-1/3">
+                                <ContactDetails contact={selectedContact} />
                             </div>
                         )}
                     </div>

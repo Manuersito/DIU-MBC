@@ -62,3 +62,13 @@ export const getTutorialsByIds = async (tutorialIds) => {
         throw new Error("Error al obtener los tutoriales");
     }
 };
+
+// Obtener múltiples tutoriales
+export const getTutorials = async () => {
+    try {
+        const response = await axios.get(API_TUTORIALS);
+        return response.data;
+    } catch (error) {
+        throw new Error("Error al obtener los tutoriales");
+    }
+};
