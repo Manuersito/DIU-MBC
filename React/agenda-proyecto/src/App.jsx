@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ContactList from './components/ContactList.jsx';
+import ContactDetails from './components/ContactDetails.jsx';
 import NavBarComponent from './components/NavBarComponent.jsx';
 import Login from './components/Login.jsx';
 import ContactGestion from './components/ContactGestion.jsx';
@@ -25,10 +26,20 @@ export default function App() {
                 <Route 
                     path="/" 
                     element={
-                        <ContactList 
-                            key={refreshKey} 
-                            onSelectContact={setSelectedContact} 
-                        />
+                        <div className="d-flex"> {/* Usamos flex para mostrar lado a lado */}
+                            {/* Lista de contactos */}
+                            <ContactList 
+                                key={refreshKey} 
+                                onSelectContact={setSelectedContact} // Seleccionamos el contacto desde aquí
+                            />
+
+                            {/* Detalles del contacto seleccionado */}
+                            {selectedContact && (
+                                <div style={{ marginLeft: '20px', marginTop: '100px', flex: 1 }}>
+                                    <ContactDetails contact={selectedContact} />
+                                </div>
+                            )}
+                        </div>
                     } 
                 />
                 <Route 

@@ -72,3 +72,13 @@ export const getTutorials = async () => {
         throw new Error("Error al obtener los tutoriales");
     }
 };
+
+// Obtener múltiples tutoriales publicados
+export const getTutorialsPublished = async () => {
+    try {
+        const response = await axios.get(`${API_TUTORIALS}/${published}`);
+        return response.data;
+    } catch (error) {
+        throw new Error("Error al obtener los tutoriales");
+    }
+};

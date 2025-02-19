@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Form, Button, Container, Alert } from 'react-bootstrap';
-import { addContact, editContact, getTutorials } from "./apiService"; // Importar la función para obtener tutoriales
+import { addContact, editContact, getTutorialsPublished } from "./apiService"; // Importar la función para obtener tutoriales
 
 export default function ContactGestion({ onSave }) {
     const location = useLocation();
@@ -26,7 +26,7 @@ export default function ContactGestion({ onSave }) {
         // Cargar tutoriales desde la API
         const fetchTutoriales = async () => {
             try {
-                const tutoriales = await getTutorials(); // Llamada a la API
+                const tutoriales = await getTutorialsPublished(); // Llamada a la API
                 setTutorialesDisponibles(tutoriales);
             } catch (error) {
                 setError("Error al cargar los tutoriales");
