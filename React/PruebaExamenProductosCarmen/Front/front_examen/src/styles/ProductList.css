@@ -1,0 +1,29 @@
+.list-group-item {
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.list-group-item:hover {
+  background-color: #f8f9fa;
+}
+
+.list-group-item-primary {
+  background-color: #e9f5ff;
+  font-weight: 600;
+}
+
+.details-card {
+  border-radius: 8px;
+  background-color: #fdfdfd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.details-card h4 {
+  color: #333;
+}
+
+.details-card button {
+  width: 100%;
+  margin-top: 10px;
+}
