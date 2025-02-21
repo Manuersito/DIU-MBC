@@ -1,0 +1,24 @@
+.btn-pink {
+  background-color: #e91e63;
+  border: none;
+  color: white;
+}
+
+.btn-pink:hover {
+  background-color: #c2185b;
+}
+
+
+.btn-pink {
+  background-color: #e91e63;
+  border: none;
+  color: white;
+}
+
+.btn-pink:hover {
+  background-color: #c2185b;
+}
+
+.list-group-item-action:hover {
+  background-color: #f48fb1 !important;
+}

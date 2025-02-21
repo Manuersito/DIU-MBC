@@ -1,0 +1,86 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+
+.btn-pink {
+  background-color: #e91e63;
+  border: none;
+  color: white;
+}
+
+.btn-pink:hover {
+  background-color: #c2185b;
+}
+
+.product-card {
+  width: 75%; 
+  max-width: 600px; 
+}
+
+.navbar-pink {
+  background-color: #e91e63 !important;
+  padding: 15px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+
+.navbar-pink .nav-link {
+  color: white !important;
+  font-weight: bold;
+  transition: color 0.3s ease-in-out;
+}
+
+
+.navbar-pink .nav-link:hover {
+  color: #f8bbd0 !important; 
+}
+
+
+.container {
+  padding-top: 80px; 
+}
+
+
+body {
+  background-color: #e6adc0; 
+  font-family: 'Arial', sans-serif;
+}
+
+
+.navbar-toggler {
+  border-color: white !important;
+}
+
+
+.btn-pink {
+  background-color: #e91e63 !important;
+  border: none;
+  color: white !important;
+  padding: 10px 15px;
+  font-weight: bold;
+  transition: background 0.3s ease-in-out;
+}
+
+.btn-pink:hover {
+  background-color: #c2185b !important;
+}
+
+
+.progress {
+  height: 20px;
+  border-radius: 10px;
+}
+
+.progress-bar {
+  font-weight: bold;
+  transition: width 0.5s ease-in-out;
+}
+
+
+
+
+
