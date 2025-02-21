@@ -1,0 +1,7 @@
+button {
+    all: unset; /* Elimina todos los estilos por defecto */
+    cursor: pointer; /* Mantiene el cursor de puntero */
+    color: inherit; /* Usa el color del texto del padre */
+    font: inherit; /* Usa la fuente del texto del padre */
+  }
+  
