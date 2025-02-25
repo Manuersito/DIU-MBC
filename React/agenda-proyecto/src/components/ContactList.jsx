@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getContacts } from "./apiService";
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import '../styles.css'
+
 
 const ContactList = ({ onSelectContact }) => {
     const [contacts, setContacts] = useState([]);

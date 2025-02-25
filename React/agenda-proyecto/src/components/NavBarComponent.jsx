@@ -4,6 +4,8 @@ import { UserContext } from '../providers/UserProvider';
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import { deleteContact } from "./apiService";
+import '../styles.css'
+
 
 export default function NavBarComponent({ selectedContact, refreshContacts }) {
     const { user } = useContext(UserContext);

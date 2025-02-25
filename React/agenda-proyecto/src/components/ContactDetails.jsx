@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getTutorialsByIds } from "./apiService";
 import { Card, Carousel, Row, Col } from "react-bootstrap";
+import '../styles.css'
 
 const ContactDetails = ({ contact }) => {
     const [tutorials, setTutorials] = useState([]);
@@ -28,7 +29,7 @@ const ContactDetails = ({ contact }) => {
             <Row>
                 {/* Detalles del contacto */}
                 <Col md={6} style={{ marginBottom: '20px' }}>
-                    <Card style={{ width: '100%' }}>
+                    <Card style={{ width: '100%', minHeight: '450px'}}>
                         <Card.Body>
                             <Card.Title className="mb-3">Detalles del Contacto</Card.Title>
                             <ul>
@@ -45,7 +46,7 @@ const ContactDetails = ({ contact }) => {
 
                 {/* Detalles de los tutoriales */}
                 <Col md={6}>
-                    <Card style={{ width: '100%' }}>
+                    <Card style={{ width: '95%', minHeight: '450px' }}>
                         <Card.Body>
                             <Card.Title className="mb-3">Detalles de los Tutoriales</Card.Title>
                             {error ? (

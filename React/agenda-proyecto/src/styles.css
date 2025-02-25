@@ -1,0 +1,132 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif !important;
+    background-color: #fef3c7 !important;
+    color: #4b5563 !important;
+}
+
+.container {
+    padding: 20px !important;
+}
+
+/* Cards */
+.card {
+    border-radius: 10px !important;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1) !important;
+    background-color: #fde68a !important;
+    border: 1px solid #f59e0b !important;
+}
+
+.card-body {
+    padding: 20px !important;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 5px !important;
+    transition: all 0.3s !important;
+}
+
+.btn-primary {
+    background-color: #ec4899 !important;
+    border-color: #db2777 !important;
+}
+
+.btn-primary:hover {
+    background-color: #be185d !important;
+    border-color: #9d174d !important;
+}
+
+.btn-secondary {
+    background-color: #06b6d4 !important;
+    border-color: #0891b2 !important;
+}
+
+.btn-secondary:hover {
+    background-color: #0e7490 !important;
+    border-color: #155e75 !important;
+}
+
+/* Forms */
+.form-control {
+    border-radius: 5px !important;
+    padding: 10px !important;
+    border: 1px solid #d1d5db !important;
+}
+
+/* Tables */
+table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+}
+
+th, td {
+    padding: 12px !important;
+    text-align: left !important;
+    border-bottom: 1px solid #e5e7eb !important;
+}
+
+th {
+    background-color: #f43f5e !important;
+    color: white !important;
+}
+
+tr:nth-child(even) {
+    background-color: #fde68a !important;
+}
+
+tr:nth-child(odd) {
+    background-color: #fef3c7 !important;
+}
+
+tr:hover {
+    background-color: #fca5a5 !important;
+}
+
+tr.selected, tr.selected:hover {
+    background-color: #f43f5e !important;
+    color: white !important;
+}
+
+/* Navbar */
+.navbar {
+    border-radius: 5px !important;
+    background-color: #c790fa !important;
+}
+
+.navbar-brand {
+    font-size: 1.5rem !important;
+    font-weight: bold !important;
+    color: #fef3c7 !important;
+}
+
+/* Login Page */
+.login-container {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    min-height: 100vh !important;
+    background-color: #fef3c7 !important;
+}
+
+.login-card {
+    width: 100% !important;
+    max-width: 400px !important;
+    background-color: #fde68a !important;
+}
+
+/* Progress Bar */
+.progress-bar {
+    border-radius: 5px !important;
+    background-color: #9333ea !important;
+}
+
+/* Carousel Controls */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(1) !important; /* Esto invierte el color de blanco a negro */
+}
+
+.carousel-indicators [data-bs-target] {
+    background-color: black !important; /* Cambia el color de los indicadores */
+}

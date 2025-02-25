@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Form, Button, Container, Alert } from 'react-bootstrap';
 import { addContact, editContact, getTutorialsPublished } from "./apiService"; // Importar la función para obtener tutoriales
+import '../styles.css'
+
+
 
 export default function ContactGestion({ onSave }) {
     const location = useLocation();
@@ -192,19 +195,25 @@ export default function ContactGestion({ onSave }) {
                 </div>
 
                 <Form.Group className="mb-4">
-                    <Form.Label>Tutoriales</Form.Label>
-                    <Form.Select 
-                        multiple 
-                        value={formData.tutoriales} // Aquí se asegura que los tutoriales seleccionados se marquen
-                        onChange={handleTutorialChange}
-                    >
-                        {tutorialesDisponibles.map((tutorial) => (
-                            <option key={tutorial.id} value={String(tutorial.id)}>
-                                {tutorial.title} {/* Muestra el nombre del tutorial */}
-                            </option>
-                        ))}
-                    </Form.Select>
-                </Form.Group>
+    <Form.Label>Tutoriales</Form.Label>
+    <Form.Select 
+        multiple 
+        value={formData.tutoriales.map(String)} 
+        onChange={handleTutorialChange}
+        className="form-control"
+    >
+        {tutorialesDisponibles.length === 0 ? (
+            <option disabled>No hay tutoriales disponibles</option>
+        ) : (
+            tutorialesDisponibles.map((tutorial) => (
+                <option key={tutorial.id} value={String(tutorial.id)}>
+                    {tutorial.title}
+                </option>
+            ))
+        )}
+    </Form.Select>
+</Form.Group>
+
 
                 <div className="d-flex gap-2 justify-content-end">
                     <Button variant="secondary" onClick={handleCancel}>

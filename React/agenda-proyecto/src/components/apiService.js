@@ -2,6 +2,7 @@ import axios from "axios";
 
 const API_CONTACTS = "http://localhost:8099/api/v1/agenda";
 const API_TUTORIALS = "http://localhost:8098/api/v1/tutorials";
+const API_TUTORIALS_PUBLISHED = "http://localhost:8098/api/v1/tutorials/published";
 
 // Obtener todos los contactos
 export const getContacts = async () => {
@@ -76,7 +77,7 @@ export const getTutorials = async () => {
 // Obtener múltiples tutoriales publicados
 export const getTutorialsPublished = async () => {
     try {
-        const response = await axios.get(`${API_TUTORIALS}/${published}`);
+        const response = await axios.get(API_TUTORIALS_PUBLISHED);
         return response.data;
     } catch (error) {
         throw new Error("Error al obtener los tutoriales");

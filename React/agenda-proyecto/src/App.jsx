@@ -6,6 +6,8 @@ import NavBarComponent from './components/NavBarComponent.jsx';
 import Login from './components/Login.jsx';
 import ContactGestion from './components/ContactGestion.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles.css';
+
 
 export default function App() {
     const [selectedContact, setSelectedContact] = useState(null);
