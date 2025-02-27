@@ -61,19 +61,22 @@ const ContactDetails = ({ contact }) => {
                                 >
                                     {tutorials.map((tutorial) => (
                                         <Carousel.Item key={tutorial.id}>
-                                            <Card>
-                                                <Card.Body>
-                                                    <Card.Title className="mb-3">{tutorial.title}</Card.Title>
-                                                    <Card.Text className="mb-3">{tutorial.description}</Card.Text>
+                                        <Card>
+                                            <Card.Body className="text-center"> 
+                                                <Card.Title className="mb-3">{tutorial.title}</Card.Title>
+                                                <Card.Text className="mb-3">{tutorial.description}</Card.Text>
+                                                <div className="d-flex justify-content-center">
                                                     <img 
                                                         src={tutorial.url} 
                                                         alt={tutorial.title} 
-                                                        className="img-fluid mt-2 display-block mx-auto" 
+                                                        className="img-fluid mt-2" 
                                                         style={{ maxHeight: '200px', objectFit: 'cover' }} 
                                                     />
-                                                </Card.Body>
-                                            </Card>
-                                        </Carousel.Item>
+                                                </div>
+                                            </Card.Body>
+                                        </Card>
+                                    </Carousel.Item>
+                                    
                                     ))}
                                 </Carousel>
                             )}

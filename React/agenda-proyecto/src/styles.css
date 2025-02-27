@@ -52,6 +52,16 @@ body {
     border-radius: 5px !important;
     padding: 10px !important;
     border: 1px solid #d1d5db !important;
+    background-color: #fff8dc !important;
+}
+
+.form-group {
+    margin-bottom: 15px !important;
+}
+
+.form-label {
+    font-weight: bold !important;
+    color: #6b7280 !important;
 }
 
 /* Tables */
@@ -92,12 +102,23 @@ tr.selected, tr.selected:hover {
 .navbar {
     border-radius: 5px !important;
     background-color: #c790fa !important;
+    padding: 10px 20px !important;
 }
 
 .navbar-brand {
     font-size: 1.5rem !important;
     font-weight: bold !important;
     color: #fef3c7 !important;
+}
+
+.navbar-nav .nav-link {
+    color: white !important;
+    font-weight: bold !important;
+    padding: 10px !important;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #fde68a !important;
 }
 
 /* Login Page */
@@ -113,6 +134,8 @@ tr.selected, tr.selected:hover {
     width: 100% !important;
     max-width: 400px !important;
     background-color: #fde68a !important;
+    padding: 20px !important;
+    border-radius: 10px !important;
 }
 
 /* Progress Bar */

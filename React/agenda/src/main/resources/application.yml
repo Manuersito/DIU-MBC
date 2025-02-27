@@ -1,13 +1,13 @@
 server:
   port: 8099
+
 spring:
   application:
-    name:personService
-main:
-  allow-bean-definition-overriding: true
-data:
-  mongodb:
-    #182.28.0.11
-    host: mongo_DB
-    port: 27017
-    database: tutorialsservice_db
+    name: microservice
+  main:
+    allow-bean-definition-overriding: true
+  data:
+    mongodb:
+      host: ${SPRING_DATA_MONGODB_HOST}
+      port: ${SPRING_DATA_MONGODB_PORT}
+      database: ${SPRING_DATA_MONGODB_DATABASE}
